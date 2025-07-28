@@ -1,0 +1,18 @@
+{
+  "name": "lunajoy",
+  "version": "1.0.0",
+  "description": "LunaJoy Techincal Challenge",
+  "license": "ISC",
+  "author": "Eliaz Bobadilla",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\"",
+    "dev:api": "cd app/api && npm run start",
+    "dev:web": "cd app/web && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
