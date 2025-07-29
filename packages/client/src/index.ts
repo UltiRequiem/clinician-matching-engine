@@ -53,6 +53,21 @@ export async function getAllClinicians(): Promise<ClinicianWithRelations[]> {
   return res.json();
 }
 
+const overlapLabelMap: Record<string, string> = {
+  available_now: "Available Now",
+  accepts_insurance: "Accepts Your Insurance",
+  specialty_match: "Specialty Match",
+  language: "Speaks Your Language",
+  state: "Licensed in Your State",
+  gender: "Preferred Gender",
+  appointment_type: "Preferred Appointment Type",
+  time_slot: "Preferred Time Slot",
+} as const;
+
+export function overlapLabels(overlapping: string[]): string[] {
+  return overlapping.map((key) => overlapLabelMap[key] || key);
+}
+
 export type {
   ClinicianMatchScore,
   ClinicianWithRelations,
