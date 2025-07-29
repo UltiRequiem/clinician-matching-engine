@@ -16,6 +16,7 @@ describe('MatchingEngineService', () => {
           provide: DatabaseService,
           useValue: {
             getCliniciansWithRelations: jest.fn(),
+            getTopClinicianWithRelations: jest.fn(),
             buildClinicianFilter: jest.fn(),
             listClinicians: jest.fn(),
           },
@@ -62,26 +63,17 @@ describe('MatchingEngineService', () => {
   describe('topMatch', () => {
     it('should return explanation for top match', async () => {
       const intake: MatchIntakeDto = { insuranceProvider: 'Aetna' } as any;
-      const clinicians: ClinicianWithRelations[] = [
-        {
-          id: 1,
-          fullName: 'A',
-          isAvailableNow: true,
-          insurancesAccepted: [{ insurance: 'Aetna' }],
-          matchCount: 0,
-        } as any,
-        {
-          id: 2,
-          fullName: 'B',
-          isAvailableNow: false,
-          insurancesAccepted: [{ insurance: 'Other' }],
-          matchCount: 1,
-        } as any,
-      ];
+      const topClinician: ClinicianWithRelations = {
+        id: 1,
+        fullName: 'A',
+        isAvailableNow: true,
+        insurancesAccepted: [{ insurance: 'Aetna' }],
+        matchCount: 0,
+      } as any;
       (databaseService.buildClinicianFilter as jest.Mock).mockReturnValue({});
       (
-        databaseService.getCliniciansWithRelations as jest.Mock
-      ).mockResolvedValue(clinicians);
+        databaseService.getTopClinicianWithRelations as jest.Mock
+      ).mockResolvedValue(topClinician);
       const explanation = await service.topMatch(intake);
       expect(explanation).toBeDefined();
     });
