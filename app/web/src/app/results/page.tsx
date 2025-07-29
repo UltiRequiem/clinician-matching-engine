@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Stethoscope } from "lucide-react";
 import {
   overlapLabels,
   explainMatch,
@@ -225,7 +224,6 @@ export default function ResultsPage() {
                 <Button
                   variant="outline"
                   onClick={() => {
-                    // Clear session storage and go back to form
                     sessionStorage.removeItem("matchResults");
                     sessionStorage.removeItem("matchIntake");
                     router.push("/");
