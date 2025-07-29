@@ -22,10 +22,10 @@ export default function Home() {
       <main>
         <Card className="mx-auto my-10 max-w-3xl shadow-lg rounded-lg">
           <CardHeader>
-            <CardTitle className="text-3xl text-[#43635f]">
-              Patient intake form
+            <CardTitle className="text-3xl text-[#43635f] font-serif">
+              Patient Intake Form
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-lg text-[#43653f]">
               Help us understand your needs to find the most suitable clinician
               for you.
             </CardDescription>

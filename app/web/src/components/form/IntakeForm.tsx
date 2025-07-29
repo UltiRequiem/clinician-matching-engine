@@ -71,10 +71,10 @@ export default function IntakeForm() {
         <IntakeFormSelectors form={form} />
 
         <div className="mb-4">
-          <FormLabel className="text-base">
-            Clinical needs and specialities
+          <FormLabel className="text-base text-[#43635f] font-semibold font-serif">
+            Clinical Needs & Specialities
           </FormLabel>
-          <FormDescription>
+          <FormDescription className="text-[#43653f]">
             Select all that apply to your situation.
           </FormDescription>
         </div>
@@ -86,10 +86,10 @@ export default function IntakeForm() {
         />
 
         <div className="mb-4">
-          <FormLabel className="text-base">
+          <FormLabel className="text-base text-[#43635f] font-semibold font-serif">
             Preferred time slots (Optional)
           </FormLabel>
-          <FormDescription>
+          <FormDescription className="text-[#43653f]">
             When would you prefer to have your appointments?
           </FormDescription>
         </div>
@@ -104,7 +104,7 @@ export default function IntakeForm() {
 
         <Button
           type="submit"
-          className="w-full bg-[#ffb21b] text-[#43635f] hover:bg-[#ffb21b]/90 text-xl py-3"
+          className="w-full bg-[#ffb21b] text-[#43635f] hover:bg-[#ffb21b]/90 text-xl font-serif py-3"
         >
           Find My Clinicians
         </Button>

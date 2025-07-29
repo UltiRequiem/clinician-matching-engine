@@ -39,6 +39,7 @@ export function IntakeFormCheckboxes({
                   >
                     <FormControl>
                       <Checkbox
+                        className="data-[state=checked]:bg-[#ffb21b] data-[state=checked]:border-[#ffb21b]"
                         checked={field.value?.includes(item.id)}
                         onCheckedChange={(checked) => {
                           return checked
