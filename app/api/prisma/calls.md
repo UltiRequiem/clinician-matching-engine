@@ -9,7 +9,7 @@ This document provides example `curl` commands for interacting with the LunaJoy 
 Request a ranked list of clinicians for a patient intake:
 
 ```sh
-curl -X POST http://localhost:3000/matching-engine/match \
+curl -X POST http://localhost:3000/matching-engine/match/explain \
   -H "Content-Type: application/json" \
   -d '{
     "state": "CA",

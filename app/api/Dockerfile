@@ -1,4 +1,4 @@
-FROM node:22
+FROM node:23
 
 WORKDIR /usr/src/app
 
@@ -13,4 +13,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD ["node", "dist/main"]
+CMD ["node", "./dist/main"]
