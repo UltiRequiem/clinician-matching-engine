@@ -1,9 +1,3 @@
-
--- === 50 NEW CLINICIANS FOR MORE OPTIONS ===
--- IDs: c1001-c1050
--- Gender, state, language, insurance, appointment type, clinical need, and time slot are cycled for variety
-
--- Clinicians
 INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
 ('c1001', 'Dr. Newdoc 1', 'female', 1, 0, CURRENT_TIMESTAMP),
 ('c1002', 'Dr. Newdoc 2', 'male', 0, 1, CURRENT_TIMESTAMP),
