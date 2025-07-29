@@ -1,23 +1,79 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { MatchIntakeDto } from './dto/match-intake.dto';
-import { ClinicianWithRelations } from './entities/matching-engine.contract';
+import {
+  ClinicianMatchScore,
+  ClinicianWithRelations,
+} from './entities/matching-engine.contract';
+import { openai } from '@ai-sdk/openai';
+import { generateText } from 'ai';
+import { Clinician } from '@prisma/client';
 
 @Injectable()
 export class MatchingEngineService {
-  // private readonly logger = new Logger(MatchingEngineService.name);
-
   constructor(private readonly databaseService: DatabaseService) {}
 
   public async matchClinicians(intake: MatchIntakeDto) {
     const clinicians = await this.databaseService.getCliniciansWithRelations(
       this.databaseService.buildClinicianFilter(intake),
     );
+
     return this.rankAndScoreClinicians(clinicians, intake);
+  }
+
+  public async topMatch(intake: MatchIntakeDto) {
+    const clinicians = await this.databaseService.getCliniciansWithRelations(
+      this.databaseService.buildClinicianFilter(intake),
+    );
+
+    const topScored = this.rankAndScoreClinicians(clinicians, intake);
+    const topMatch = topScored.shift()!;
+    const explanation = await this.generateTopMatchExplanation(
+      intake,
+      topMatch,
+    );
+
+    return {
+      clinician: topMatch,
+      explanation,
+    };
   }
 
   public async getAllClinicians() {
     return await this.databaseService.listClinicians();
+  }
+
+  private async generateTopMatchExplanation(
+    intake: MatchIntakeDto,
+    topMatch: ClinicianMatchScore,
+  ) {
+    const systemPrompt =
+      'You are a helpful assistant that provides concise summaries of clinician matches.';
+
+    const { text } = await generateText({
+      model: openai('gpt-4o'),
+      messages: [
+        {
+          role: 'system',
+          content: systemPrompt,
+        },
+        {
+          role: 'user',
+          content: this.buildUserPrompt(intake, topMatch),
+        },
+      ],
+    });
+
+    return text;
+  }
+
+  private buildUserPrompt(
+    intake: MatchIntakeDto,
+    topScored: ClinicianMatchScore,
+  ) {
+    return `Given the following clinicians and patient intake, provide a concise summary of the top match:
+    Intake: ${JSON.stringify(intake)}
+    Clinicians: ${JSON.stringify(topScored)}`;
   }
 
   private rankAndScoreClinicians(

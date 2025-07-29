@@ -16,3 +16,12 @@ export interface ClinicianWithRelations extends Clinician {
   appointmentTypes: ClinicianAppointmentType[];
   availableTimeSlots: ClinicianTimeSlot[];
 }
+
+export interface ClinicianMatchScore {
+  id: string;
+  fullName: string;
+  score: number;
+  isAvailableNow: boolean;
+  overlapping: string[];
+  matchCount: number;
+}

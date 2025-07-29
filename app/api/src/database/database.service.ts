@@ -6,12 +6,6 @@ import { Prisma, Gender } from '@prisma/client';
 export class DatabaseService {
   constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * Returns all clinicians with all relations for matching
-   */
-  /**
-   * Build a Prisma filter for clinicians based on patient intake
-   */
   buildClinicianFilter(intake: {
     state: string;
     language: string;
