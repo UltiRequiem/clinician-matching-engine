@@ -231,3 +231,242 @@ INSERT INTO "PatientTimeSlot" (id, patientId, slot) VALUES
 ('pts1', 'p1', 'morning'), ('pts2', 'p2', 'afternoon'), ('pts3', 'p3', 'evening'), ('pts4', 'p4', 'night'),
 ('pts5', 'p5', 'morning'), ('pts6', 'p6', 'afternoon'), ('pts7', 'p7', 'evening'), ('pts8', 'p8', 'night'),
 ('pts9', 'p9', 'morning'), ('pts10', 'p10', 'afternoon');
+
+-- Anxiety
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c66', 'Dr. Amy Anxiety', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c67', 'Dr. Alan Anxiety', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs66', 'c66', 'CA'), ('cs67', 'c67', 'NY');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl66', 'c66', 'English'), ('cl67', 'c67', 'Spanish');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci66', 'c66', 'Aetna'), ('ci67', 'c67', 'BlueCross');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat66', 'c66', 'therapy'), ('cat67', 'c67', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn66', 'c66', 'anxiety'), ('ccn67', 'c67', 'anxiety');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts66', 'c66', 'morning'), ('cts67', 'c67', 'afternoon');
+
+-- Depression
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c68', 'Dr. Dana Depression', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c69', 'Dr. Derek Depression', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs68', 'c68', 'TX'), ('cs69', 'c69', 'FL');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl68', 'c68', 'French'), ('cl69', 'c69', 'English');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci68', 'c68', 'Cigna'), ('ci69', 'c69', 'Aetna');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat68', 'c68', 'therapy'), ('cat69', 'c69', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn68', 'c68', 'depression'), ('ccn69', 'c69', 'depression');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts68', 'c68', 'evening'), ('cts69', 'c69', 'night');
+
+-- Trauma
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c70', 'Dr. Tina Trauma', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c71', 'Dr. Tom Trauma', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs70', 'c70', 'CA'), ('cs71', 'c71', 'NY');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl70', 'c70', 'Spanish'), ('cl71', 'c71', 'French');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci70', 'c70', 'BlueCross'), ('ci71', 'c71', 'Cigna');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat70', 'c70', 'therapy'), ('cat71', 'c71', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn70', 'c70', 'trauma'), ('ccn71', 'c71', 'trauma');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts70', 'c70', 'morning'), ('cts71', 'c71', 'afternoon');
+
+-- Perinatal
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c72', 'Dr. Paula Perinatal', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c73', 'Dr. Peter Perinatal', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs72', 'c72', 'TX'), ('cs73', 'c73', 'FL');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl72', 'c72', 'English'), ('cl73', 'c73', 'French');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci72', 'c72', 'Aetna'), ('ci73', 'c73', 'BlueCross');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat72', 'c72', 'therapy'), ('cat73', 'c73', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn72', 'c72', 'perinatal'), ('ccn73', 'c73', 'perinatal');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts72', 'c72', 'evening'), ('cts73', 'c73', 'night');
+
+-- LGBTQ
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c74', 'Dr. Laura LGBTQ', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c75', 'Dr. Luke LGBTQ', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs74', 'c74', 'CA'), ('cs75', 'c75', 'NY');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl74', 'c74', 'Spanish'), ('cl75', 'c75', 'English');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci74', 'c74', 'Cigna'), ('ci75', 'c75', 'Aetna');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat74', 'c74', 'therapy'), ('cat75', 'c75', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn74', 'c74', 'lgbtq'), ('ccn75', 'c75', 'lgbtq');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts74', 'c74', 'morning'), ('cts75', 'c75', 'afternoon');
+
+-- Couples
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c76', 'Dr. Cathy Couples', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c77', 'Dr. Carl Couples', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs76', 'c76', 'TX'), ('cs77', 'c77', 'FL');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl76', 'c76', 'French'), ('cl77', 'c77', 'Spanish');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci76', 'c76', 'BlueCross'), ('ci77', 'c77', 'Cigna');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat76', 'c76', 'therapy'), ('cat77', 'c77', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn76', 'c76', 'couples'), ('ccn77', 'c77', 'couples');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts76', 'c76', 'evening'), ('cts77', 'c77', 'night');
+
+-- Grief
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c78', 'Dr. Gina Grief', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c79', 'Dr. Greg Grief', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs78', 'c78', 'CA'), ('cs79', 'c79', 'NY');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl78', 'c78', 'English'), ('cl79', 'c79', 'French');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci78', 'c78', 'Aetna'), ('ci79', 'c79', 'BlueCross');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat78', 'c78', 'therapy'), ('cat79', 'c79', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn78', 'c78', 'grief'), ('ccn79', 'c79', 'grief');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts78', 'c78', 'morning'), ('cts79', 'c79', 'afternoon');
+
+-- Stress
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c80', 'Dr. Stella Stress', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c81', 'Dr. Steve Stress', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs80', 'c80', 'TX'), ('cs81', 'c81', 'FL');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl80', 'c80', 'Spanish'), ('cl81', 'c81', 'English');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci80', 'c80', 'Cigna'), ('ci81', 'c81', 'Aetna');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat80', 'c80', 'therapy'), ('cat81', 'c81', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn80', 'c80', 'stress'), ('ccn81', 'c81', 'stress');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts80', 'c80', 'evening'), ('cts81', 'c81', 'night');
+
+-- === EXTRA CLINICIANS FOR NEW CLINICAL NEEDS ===
+-- PTSD
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c82', 'Dr. Paula PTSD', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c83', 'Dr. Peter PTSD', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs82', 'c82', 'CA'), ('cs83', 'c83', 'NY');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl82', 'c82', 'English'), ('cl83', 'c83', 'Spanish');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci82', 'c82', 'Aetna'), ('ci83', 'c83', 'BlueCross');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat82', 'c82', 'therapy'), ('cat83', 'c83', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn82', 'c82', 'ptsd'), ('ccn83', 'c83', 'ptsd');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts82', 'c82', 'morning'), ('cts83', 'c83', 'afternoon');
+
+-- OCD
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c84', 'Dr. Olivia OCD', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c85', 'Dr. Oscar OCD', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs84', 'c84', 'TX'), ('cs85', 'c85', 'FL');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl84', 'c84', 'French'), ('cl85', 'c85', 'English');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci84', 'c84', 'Cigna'), ('ci85', 'c85', 'Aetna');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat84', 'c84', 'therapy'), ('cat85', 'c85', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn84', 'c84', 'ocd'), ('ccn85', 'c85', 'ocd');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts84', 'c84', 'evening'), ('cts85', 'c85', 'night');
+
+-- Bipolar
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c86', 'Dr. Bella Bipolar', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c87', 'Dr. Ben Bipolar', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs86', 'c86', 'CA'), ('cs87', 'c87', 'NY');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl86', 'c86', 'Spanish'), ('cl87', 'c87', 'French');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci86', 'c86', 'BlueCross'), ('ci87', 'c87', 'Cigna');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat86', 'c86', 'therapy'), ('cat87', 'c87', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn86', 'c86', 'bipolar'), ('ccn87', 'c87', 'bipolar');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts86', 'c86', 'morning'), ('cts87', 'c87', 'afternoon');
+
+-- Schizophrenia
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c88', 'Dr. Sarah Schizophrenia', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c89', 'Dr. Sam Schizophrenia', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs88', 'c88', 'TX'), ('cs89', 'c89', 'FL');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl88', 'c88', 'English'), ('cl89', 'c89', 'French');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci88', 'c88', 'Aetna'), ('ci89', 'c89', 'BlueCross');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat88', 'c88', 'therapy'), ('cat89', 'c89', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn88', 'c88', 'schizophrenia'), ('ccn89', 'c89', 'schizophrenia');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts88', 'c88', 'evening'), ('cts89', 'c89', 'night');
+
+-- Personality Disorders
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c90', 'Dr. Penny Personality', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c91', 'Dr. Paul Personality', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs90', 'c90', 'CA'), ('cs91', 'c91', 'NY');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl90', 'c90', 'Spanish'), ('cl91', 'c91', 'English');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci90', 'c90', 'Cigna'), ('ci91', 'c91', 'Aetna');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat90', 'c90', 'therapy'), ('cat91', 'c91', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn90', 'c90', 'personality_disorders'), ('ccn91', 'c91', 'personality_disorders');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts90', 'c90', 'morning'), ('cts91', 'c91', 'afternoon');
+
+-- Family Issues
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c92', 'Dr. Fiona Family', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c93', 'Dr. Frank Family', 'male', 0, 0, CURRENT_TIMESTAMP);
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs92', 'c92', 'TX'), ('cs93', 'c93', 'FL');
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl92', 'c92', 'French'), ('cl93', 'c93', 'Spanish');
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci92', 'c92', 'BlueCross'), ('ci93', 'c93', 'Cigna');
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat92', 'c92', 'therapy'), ('cat93', 'c93', 'medication');
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn92', 'c92', 'family'), ('ccn93', 'c93', 'family');
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts92', 'c92', 'evening'), ('cts93', 'c93', 'night');

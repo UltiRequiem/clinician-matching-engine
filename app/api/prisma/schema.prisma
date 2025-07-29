@@ -138,6 +138,12 @@ enum ClinicalNeed {
   couples
   grief
   stress
+  ptsd
+  ocd
+  bipolar
+  schizophrenia
+  personality_disorders
+  family
 }
 
 enum TimeSlot {
