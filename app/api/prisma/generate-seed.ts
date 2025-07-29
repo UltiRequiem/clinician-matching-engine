@@ -1,16 +1,29 @@
 // Generates a seed.sql with all possible combinations of state, insurance, language, clinical need, appointment type, gender, and time slot
 import { writeFileSync } from 'fs';
 
-const states = ['CA', 'NY', 'TX', 'FL'];
-const insurances = ['Aetna', 'BlueCross', 'Cigna'];
+const states = ['CA', 'TX', 'FL', 'NY', 'IL', 'PA', 'GA', 'NC', 'MI'];
+const insurances = [
+  'Aetna',
+  'Blue Cross Blue Shield',
+  'Cigna',
+  'UnitedHealthcare',
+  'Kaiser Permanente',
+  'Humana',
+  'Anthem',
+  'Medicare',
+];
 const languages = ['English', 'Spanish', 'French'];
 const clinicalNeeds = [
   'anxiety',
   'depression',
+  'ptsd',
+  'ocd',
+  'bipolar',
+  'schizophrenia',
+  'personality_disorders',
   'trauma',
-  'perinatal',
   'lgbtq',
-  'couples',
+  'family',
   'grief',
   'stress',
 ];
@@ -34,7 +47,7 @@ for (const state of states) {
         for (const appointmentType of appointmentTypes) {
           for (const gender of genders) {
             for (const timeSlot of timeSlots) {
-              const clinicianId = `comb${id}`;
+              const clinicianId = `doctisplease${id}`;
               sql += `INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES ('${clinicianId}', 'Dr. Combo ${id}', '${gender}', 1, 0, CURRENT_TIMESTAMP);\n`;
               sql += `INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES ('combcs${stateId}', '${clinicianId}', '${state}');\n`;
               sql += `INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES ('combcl${langId}', '${clinicianId}', '${language}');\n`;
@@ -57,5 +70,5 @@ for (const state of states) {
   }
 }
 
-writeFileSync('seed.combinations.sql', sql);
-console.log('seed.combinations.sql generated!');
+writeFileSync('seed.combinations2.sql', sql);
+console.log('seed.combinations2.sql generated!');
