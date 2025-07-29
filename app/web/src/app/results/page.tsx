@@ -241,11 +241,11 @@ export default function ResultsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col items-center relative">
+          <div className="flex flex-col items-center relative min-h-[500px] max-h-[600px] w-full">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={clinician.id}
-                className="bg-white rounded-xl shadow-xl p-6 flex flex-col border border-[#f3e9d2] w-full max-w-md min-h-[500px] max-h-[600px] backdrop-blur-sm overflow-hidden"
+                className="absolute inset-0 bg-white rounded-xl shadow-xl p-6 flex flex-col border border-[#f3e9d2] w-full max-w-md min-h-[500px] max-h-[600px] backdrop-blur-sm overflow-hidden"
                 initial={{
                   x:
                     direction === "left"
