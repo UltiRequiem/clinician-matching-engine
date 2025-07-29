@@ -1,8 +1,8 @@
 import type {
+  ClinicianMatchScore,
+  ClinicianWithRelations,
   MatchIntakeDto,
   UrgencyLevel,
-  ClinicianWithRelations,
-  ClinicianMatchScore,
 } from "./types";
 
 const API_BASE = `https://lunajoy-production.up.railway.app/`;
@@ -14,7 +14,7 @@ export async function getHello(): Promise<string> {
 }
 
 export async function matchClinicians(
-  intake: MatchIntakeDto
+  intake: MatchIntakeDto,
 ): Promise<ClinicianMatchScore[]> {
   const res = await fetch(`${API_BASE}/matching-engine/match`, {
     method: "POST",
@@ -28,7 +28,7 @@ export async function matchClinicians(
 }
 
 export async function explainMatch(
-  intake: MatchIntakeDto
+  intake: MatchIntakeDto,
 ): Promise<ReadableStreamDefaultReader<Uint8Array>> {
   const res = await fetch(`${API_BASE}/matching-engine/match/explain`, {
     method: "POST",
@@ -54,8 +54,8 @@ export async function getAllClinicians(): Promise<ClinicianWithRelations[]> {
 }
 
 export type {
+  ClinicianMatchScore,
+  ClinicianWithRelations,
   MatchIntakeDto,
   UrgencyLevel,
-  ClinicianWithRelations,
-  ClinicianMatchScore,
 };
