@@ -9,7 +9,9 @@ const API_BASE = "https://lunajoy-production.up.railway.app";
 
 export async function getHello(): Promise<string> {
   const res = await fetch(`${API_BASE}/`, { method: "GET" });
+
   if (!res.ok) throw new Error("Failed to fetch hello");
+
   return res.text();
 }
 
