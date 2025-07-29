@@ -33,12 +33,14 @@ export default function ResultsPage() {
   useEffect(() => {
     const storedResults = sessionStorage.getItem("matchResults");
     const storedIntake = sessionStorage.getItem("matchIntake");
+
     if (storedResults && storedIntake) {
       setResults(JSON.parse(storedResults));
       setIntake(JSON.parse(storedIntake));
     } else {
       router.push("/");
     }
+
     setLoading(false);
   }, [router]);
 
@@ -243,7 +245,7 @@ export default function ResultsPage() {
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={clinician.id}
-                className="bg-white rounded-xl shadow-xl p-6 flex flex-col border border-[#f3e9d2] w-full max-w-md min-h-[600px] max-h-[700px] backdrop-blur-sm overflow-hidden"
+                className="bg-white rounded-xl shadow-xl p-6 flex flex-col border border-[#f3e9d2] w-full max-w-md min-h-[500px] max-h-[600px] backdrop-blur-sm overflow-hidden"
                 initial={{
                   x:
                     direction === "left"
@@ -268,9 +270,7 @@ export default function ResultsPage() {
                   else if (info.offset.x < -120) handleSwipe("left");
                 }}
               >
-              
-
-                <div className="text-center mb-3">
+                <div className="text-center mb-2">
                   <div className="flex justify-center mb-3">
                     <div
                       className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg"
@@ -289,7 +289,7 @@ export default function ResultsPage() {
                     {clinician.fullName}
                   </h2>
                 </div>
-                <div className="flex items-center gap-2 sm:gap-3 text-sm mb-3 justify-center">
+                <div className="flex items-center gap-2 sm:gap-3 text-sm mb-2 justify-center">
                   {isTopMatch && (
                     <span className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-sm border border-yellow-300">
                       ⭐ Top Match
@@ -297,7 +297,9 @@ export default function ResultsPage() {
                   )}
                   <span className="inline-flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 border border-blue-300 shadow-sm">
                     <span>Score:</span>
-                    <span className="font-bold">{Math.round(clinician.score)}%</span>
+                    <span className="font-bold">
+                      {Math.round(clinician.score)}%
+                    </span>
                   </span>
                   {clinician.isAvailableNow && (
                     <span className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-green-200 to-green-300 text-green-800 border border-green-300 shadow-sm">
@@ -305,8 +307,8 @@ export default function ResultsPage() {
                     </span>
                   )}
                 </div>
-                {clinician.overlapping.length > 0 && (
-                  <div className="mb-3 text-center">
+                {clinician.overlapping.length > 0 && !isTopMatch && (
+                  <div className="mb-2 text-center">
                     <span className="font-semibold text-[#43635f] mb-2 block">
                       Matching Criteria:
                     </span>
@@ -326,7 +328,7 @@ export default function ResultsPage() {
                 )}
 
                 {isTopMatch && (
-                  <div className="mt-3 p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200 shadow-sm flex-shrink-0">
+                  <div className="mt-2 p-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200 shadow-sm flex-shrink-0">
                     <div className="mb-3">
                       <h3 className="text-sm font-bold text-[#43635f] flex items-center gap-2">
                         <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
@@ -334,8 +336,8 @@ export default function ResultsPage() {
                       </h3>
                     </div>
 
-                    <div className="min-h-[120px]">
-                      <div className="h-48 overflow-y-auto pr-2 border border-gray-200 rounded-lg p-3 bg-white">
+                    <div className="min-h-[100px]">
+                      <div className="h-36 overflow-y-auto pr-2 border border-gray-200 rounded-lg p-3 bg-white">
                         {displayedExplanation ? (
                           <div className="space-y-2">
                             <p className="text-sm leading-relaxed text-[#43635f] whitespace-pre-wrap">
@@ -354,7 +356,7 @@ export default function ResultsPage() {
                   </div>
                 )}
 
-                <div className="flex justify-between mt-auto pt-6">
+                <div className="flex justify-between mt-auto pt-4">
                   <Button
                     variant="outline"
                     className="w-32 text-xl font-serif py-3"
