@@ -14,5 +14,9 @@
   },
   "dependencies": {
     "concurrently": "^9.2.0"
-  }
+  },
+  "workspaces": [
+    "packages/*",
+    "app/*"
+  ]
 }
