@@ -1,6 +1,7 @@
 -- Seed for Clinicians and related tables
 
 -- 20 Clinicians
+
 INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
 ('c1', 'Dr. Alice Smith', 'female', 1, 2, CURRENT_TIMESTAMP),
 ('c2', 'Dr. Bob Johnson', 'male', 0, 1, CURRENT_TIMESTAMP),
@@ -21,10 +22,7 @@ INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, creat
 ('c17', 'Dr. Quinn Gold', 'non_binary', 0, 1, CURRENT_TIMESTAMP),
 ('c18', 'Dr. Rose Bronze', 'female', 1, 0, CURRENT_TIMESTAMP),
 ('c19', 'Dr. Sam Copper', 'male', 0, 2, CURRENT_TIMESTAMP),
-('c20', 'Dr. Tina Teal', 'female', 1, 1, CURRENT_TIMESTAMP);
-
--- 45 More Clinicians
-INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c20', 'Dr. Tina Teal', 'female', 1, 1, CURRENT_TIMESTAMP),
 ('c21', 'Dr. Uma Indigo', 'female', 1, 2, CURRENT_TIMESTAMP),
 ('c22', 'Dr. Victor Jade', 'male', 0, 1, CURRENT_TIMESTAMP),
 ('c23', 'Dr. Wendy Lime', 'female', 1, 0, CURRENT_TIMESTAMP),
