@@ -50,6 +50,7 @@ export class DatabaseService {
   }
   async getCliniciansWithRelations(filter: Prisma.ClinicianWhereInput = {}) {
     return await this.prisma.clinician.findMany({
+      take: 10,
       where: filter,
       include: {
         insurancesAccepted: true,
