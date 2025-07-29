@@ -17,9 +17,6 @@ Welcome to the LunaJoy Technical Challenge project documentation. This folder co
   - [components/ui/button.tsx](#componentsuibuttontsx)
   - [components/ui/form.tsx](#componentsuiformtsx)
 - [Backend Components](#backend-components)
-  - [lib/constants.ts](#libconstantsts)
-  - [lib/matchClinicians.ts](#libmatchcliniciansts)
-  - [lib/types.ts](#libtypests)
 - [How to Run](#how-to-run)
 - [Customization](#customization)
 - [License](#license)
@@ -29,6 +26,10 @@ Welcome to the LunaJoy Technical Challenge project documentation. This folder co
 ## Overview
 
 We were tasked to create a fullstack service for matching patients with clinicians based on their preferences and needs. It features a modern React/Next.js frontend and NestJS backend for matching logic.
+
+The frontend is located in the `app/web` folder and is built with Next.js.
+
+The backend is located in the `/app/api` folder and is built with [NestJS](https://nestjs.com/). It provides RESTful endpoints for clinician data, patient intake, and matching logic. The backend uses Turso as the database provider and Prisma as the ORM. CI is handled with GitHub Actions, and CD is managed with Vercel and Railway.
 
 ---
 
@@ -119,9 +120,7 @@ We were tasked to create a fullstack service for matching patients with clinicia
 
 ---
 
-## Backend Components
-
-## How to Run
+## How to Run the Frontend
 
 1. **Install dependencies:**
    ```sh
@@ -133,3 +132,68 @@ We were tasked to create a fullstack service for matching patients with clinicia
    ```
 3. **Open in your browser:**  
    Visit [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Backend Components
+
+- **src/app.module.ts**
+- The root module that imports all other modules (database, matching engine, config, etc.).
+
+- **src/app.controller.ts**  
+  Basic controller for root endpoints (e.g., health check).
+
+- **src/database/database.module.ts & database.service.ts**  
+  Provides a service for database access, wrapping Prisma and exposing methods for CRUD operations on clinicians, patients, matches, etc.
+
+- **src/prisma/prisma.module.ts & prisma.service.ts**  
+  Sets up the Prisma client. Connects to Turso (production) or SQLite (development) based on environment variables. Ensures a singleton Prisma client for the app.
+
+- **src/matching-engine/matching-engine.module.ts & matching-engine.service.ts**  
+  Contains the core logic for matching patients with clinicians based on intake data and clinician availability/attributes.
+
+- **src/config/config.module.ts & config.service.ts**  
+  Loads and provides environment variables (e.g., database URLs, tokens).
+
+- **prisma/schema.prisma**  
+  Defines the database schema for clinicians, patients, clinical needs, time slots, etc.
+
+- **prisma/seed.sql / seed.ts**  
+  Scripts to seed the database with sample data for development/testing.
+
+---
+
+### Database & ORM
+
+- **Database:**  
+  [Turso](https://turso.tech/) (distributed, serverless SQLite) is used in production. Local SQLite is used for development.
+- **ORM:**  
+  [Prisma](https://www.prisma.io/) is used for type-safe database access and migrations.
+
+---
+
+### CI/CD
+
+- **CI:**  
+  [GitHub Actions](https://github.com/features/actions) runs linting, type-checking, tests, and build checks on every push and pull request.
+- **CD:**
+  - **Vercel:** Deploys the frontend and serverless API endpoints.
+  - **Railway:** Hosts backend services and the Turso database. Environment variables and secrets are managed via the Railway dashboard.
+
+---
+
+### How to Run the Backend
+
+1. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+2. **Seed the database (optional):**
+   ```sh
+   npx prisma db seed
+   ```
+3. **Start the backend server:**
+   ```sh
+   npm run start:dev
+   ```
+4. **API endpoints** will be available at `http://localhost:4000/` (or as configured).
