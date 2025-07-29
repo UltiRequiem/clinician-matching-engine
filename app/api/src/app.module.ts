@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
+import { MatchingEngineModule } from './matching-engine/matching-engine.module';
 
 @Module({
-  imports: [PrismaModule, ConfigModule, DatabaseModule],
+  imports: [PrismaModule, ConfigModule, DatabaseModule, MatchingEngineModule],
   controllers: [AppController],
   providers: [AppService],
 })

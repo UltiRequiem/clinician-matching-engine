@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" 
+  url      = "file:./dev.db"
+}
+
+model Patient {
+  id                   String              @id @default(cuid())
+  state                String
+  language             String
+  genderPreference     Gender?         
+  insuranceProvider    String
+  appointmentType      AppointmentType
+  urgencyLevel         UrgencyLevel
+  createdAt            DateTime            @default(now())
+
+  clinicalNeeds        PatientClinicalNeed[]
+  preferredTimeSlots   PatientTimeSlot[]
+  matchLogs            MatchLog[]
+}
+
+model Clinician {
+  id                   String               @id @default(cuid())
+  fullName             String
+  gender               Gender
+  isAvailableNow       Boolean              @default(false)
+  matchCount           Int                  @default(0)
+  createdAt            DateTime             @default(now())
+
+  statesLicensed       ClinicianState[]
+  languagesSpoken      ClinicianLanguage[]
+  insurancesAccepted   ClinicianInsurance[]
+  appointmentTypes     ClinicianAppointmentType[]
+  clinicalSpecialties  ClinicianClinicalNeed[]
+  availableTimeSlots   ClinicianTimeSlot[]
+  matchLogs            MatchLog[]
+}
+
+model MatchLog {
+  id             String     @id @default(cuid())
+  matchScore     Float
+  overlapping    Json       // Use JSON to store list of strings
+  createdAt      DateTime   @default(now())
+
+  patientId      String
+  clinicianId    String
+
+  patient        Patient    @relation(fields: [patientId], references: [id])
+  clinician      Clinician  @relation(fields: [clinicianId], references: [id])
+}
+
+// -----------------------------
+// JOIN TABLES (Many-to-Many)
+// -----------------------------
+
+model PatientClinicalNeed {
+  id         String         @id @default(cuid())
+  patient    Patient        @relation(fields: [patientId], references: [id])
+  patientId  String
+  need       ClinicalNeed
+}
+
+model ClinicianClinicalNeed {
+  id          String         @id @default(cuid())
+  clinician   Clinician      @relation(fields: [clinicianId], references: [id])
+  clinicianId String
+  need        ClinicalNeed
+}
+
+model PatientTimeSlot {
+  id         String         @id @default(cuid())
+  patient    Patient        @relation(fields: [patientId], references: [id])
+  patientId  String
+  slot       TimeSlot
+}
+
+model ClinicianTimeSlot {
+  id          String         @id @default(cuid())
+  clinician   Clinician      @relation(fields: [clinicianId], references: [id])
+  clinicianId String
+  slot        TimeSlot
+}
+
+model ClinicianState {
+  id          String      @id @default(cuid())
+  clinician   Clinician   @relation(fields: [clinicianId], references: [id])
+  clinicianId String
+  state       String
+}
+
+model ClinicianLanguage {
+  id          String      @id @default(cuid())
+  clinician   Clinician   @relation(fields: [clinicianId], references: [id])
+  clinicianId String
+  language    String
+}
+
+model ClinicianInsurance {
+  id          String      @id @default(cuid())
+  clinician   Clinician   @relation(fields: [clinicianId], references: [id])
+  clinicianId String
+  insurance   String
+}
+
+model ClinicianAppointmentType {
+  id          String             @id @default(cuid())
+  clinician   Clinician          @relation(fields: [clinicianId], references: [id])
+  clinicianId String
+  type        AppointmentType
+}
+
+// -----------------------------
+// ENUMS
+// -----------------------------
+
+enum Gender {
+  male
+  female
+  non_binary
+  other
+}
+
+enum AppointmentType {
+  therapy
+  medication
+}
+
+enum ClinicalNeed {
+  anxiety
+  depression
+  trauma
+  perinatal
+  lgbtq
+  couples
+  grief
+  stress
+}
+
+enum TimeSlot {
+  morning
+  afternoon
+  evening
+  night
+}
+
+enum UrgencyLevel {
+  immediate
+  flexible
+}
