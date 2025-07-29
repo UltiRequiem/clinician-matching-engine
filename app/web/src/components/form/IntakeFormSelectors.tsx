@@ -66,8 +66,10 @@ const items = [
 
 export function IntakeFormSelectors({
   form,
+  setIsMedicationManagement,
 }: {
   form: UseFormReturn<z.infer<typeof FormSchema>>;
+  setIsMedicationManagement?: (value: boolean) => void;
 }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -81,7 +83,14 @@ export function IntakeFormSelectors({
               <FormLabel>{item.label}</FormLabel>
               <FormControl>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    if (item.field_name === "appointment_type") {
+                      const isMedicationManagement =
+                        value === "Medication Management";
+                      setIsMedicationManagement?.(isMedicationManagement);
+                    }
+                  }}
                   defaultValue={field.value}
                 >
                   <SelectTrigger className="w-full md:w-[190px]">

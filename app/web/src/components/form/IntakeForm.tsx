@@ -11,6 +11,7 @@ import { CLINICAL_NEEDS, TIME_SLOTS } from "@/lib/constants";
 import { IntakeFormSelectors } from "./IntakeFormSelectors";
 import { matchClinicians, MatchIntakeDto, UrgencyLevel } from "@lunajoy/engine";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function IntakeForm() {
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function IntakeForm() {
             : data.gender_preference,
         insuranceProvider: data.insurance_provider,
         appointmentType: data.appointment_type.toLowerCase(),
-        clinicalNeeds: data.clinical_needs,
+        clinicalNeeds: data.clinical_needs ?? [],
         preferredTimeSlots: data.preferred_time_slots,
         urgencyLevel: (data.urgency_level === "Inmediate (within 3 days)"
           ? "immediate"
@@ -65,25 +66,33 @@ export default function IntakeForm() {
     }
   }
 
+  const [isMedicationManagement, setIsMedicationManagement] = useState(false);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <IntakeFormSelectors form={form} />
-
-        <div className="mb-4">
-          <FormLabel className="text-base text-[#43635f] font-semibold font-serif">
-            Clinical Needs & Specialities
-          </FormLabel>
-          <FormDescription className="text-[#43653f]">
-            Select all that apply to your situation.
-          </FormDescription>
-        </div>
-
-        <IntakeFormCheckboxes
+        <IntakeFormSelectors
           form={form}
-          field_name="clinical_needs"
-          dataMap={CLINICAL_NEEDS}
+          setIsMedicationManagement={setIsMedicationManagement}
         />
+
+        {!isMedicationManagement && (
+          <>
+            <div className="mb-4">
+              <FormLabel className="text-base text-[#43635f] font-semibold font-serif">
+                Clinical Needs & Specialities
+              </FormLabel>
+              <FormDescription className="text-[#43653f]">
+                Select all that apply to your situation.
+              </FormDescription>
+              <IntakeFormCheckboxes
+                form={form}
+                field_name="clinical_needs"
+                dataMap={CLINICAL_NEEDS}
+              />
+            </div>
+          </>
+        )}
 
         <div className="mb-4">
           <FormLabel className="text-base text-[#43635f] font-semibold font-serif">
