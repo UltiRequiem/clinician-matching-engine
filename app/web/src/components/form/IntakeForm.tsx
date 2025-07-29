@@ -11,7 +11,7 @@ import { CLINICAL_NEEDS, TIME_SLOTS } from "@/lib/constants";
 import { IntakeFormSelectors } from "./IntakeFormSelectors";
 import { matchClinicians, MatchIntakeDto, UrgencyLevel } from "@lunajoy/engine";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function IntakeForm() {
   const router = useRouter();
@@ -59,6 +59,12 @@ export default function IntakeForm() {
   }
 
   const [isMedicationManagement, setIsMedicationManagement] = useState(false);
+
+  useEffect(() => {
+    if (isMedicationManagement) {
+      form.setValue("clinical_needs", []);
+    }
+  }, [isMedicationManagement]);
 
   return (
     <Form {...form}>
