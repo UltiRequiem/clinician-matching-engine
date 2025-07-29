@@ -99,7 +99,7 @@ export default function ResultsPage() {
 										{clinician.fullName}
 									</h2>
 									<div className="text-sm text-gray-500 mb-2">
-										Score: {Math.round(clinician.score * 100)}%
+										Score: {Math.round(clinician.score)}%
 									</div>
 									<div className="mb-2">
 										{clinician.isAvailableNow ? (
