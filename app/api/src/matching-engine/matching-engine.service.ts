@@ -48,8 +48,8 @@ export class MatchingEngineService {
     topMatch: ClinicianMatchScore,
     clinicians: ClinicianWithRelations[],
   ) {
-    const systemPrompt =
-      'You are a helpful assistant that provides concise summaries of clinician matches. Output clean text without any markdown or formatting.';
+    const systemPrompt = `You are a helpful assistant that provides concise summaries of clinician matches.
+       Output clean text without any markdown or formatting. Make the output conscise, less than 40 words.`;
 
     const { textStream } = streamText({
       model: openai('gpt-4o-mini'),

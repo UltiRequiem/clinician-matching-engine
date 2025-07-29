@@ -234,7 +234,7 @@ export default function ResultsPage() {
           <CardTitle className="text-3xl text-[#43635f] text-center mb-2 font-serif">
             Your Matches
           </CardTitle>
-          <CardDescription className="text-center text-[#43635f]">
+          <CardDescription className="text-center text-[#43635f] text-bold">
             Swipe right to select your preferred clinician, or left to skip.
           </CardDescription>
         </CardHeader>
@@ -316,14 +316,16 @@ export default function ResultsPage() {
                       Matching Criteria:
                     </span>
                     <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
-                      {overlapLabels(clinician.overlapping).map((criteria) => (
-                        <span
-                          key={criteria}
-                          className="bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-800 text-xs px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border border-blue-200 font-medium"
-                        >
-                          {criteria}
-                        </span>
-                      ))}
+                      {overlapLabels(clinician.overlapping)
+                        .sort((a, b) => a.length - b.length)
+                        .map((criteria) => (
+                          <span
+                            key={criteria}
+                            className="bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-800 text-xs px-1.5 py-0.5 sm:px-3 sm:py-1.5 rounded-full border border-blue-200 font-medium"
+                          >
+                            {criteria}
+                          </span>
+                        ))}
                     </div>
                   </div>
                 )}
