@@ -49,7 +49,7 @@ export class MatchingEngineService {
     clinicians: ClinicianWithRelations[],
   ) {
     const systemPrompt =
-      'You are a helpful assistant that provides concise summaries of clinician matches.';
+      'You are a helpful assistant that provides concise summaries of clinician matches. Output clean text without any markdown or formatting.';
 
     const { textStream } = streamText({
       model: openai('gpt-4o-mini'),

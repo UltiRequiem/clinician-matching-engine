@@ -27,9 +27,8 @@ export default function ResultsPage() {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
   const [noMore, setNoMore] = useState(false);
-  const [explanation, setExplanation] = useState("");
+
   const [displayedExplanation, setDisplayedExplanation] = useState("");
-  const [isExplaining, setIsExplaining] = useState(false);
 
   useEffect(() => {
     const storedResults = sessionStorage.getItem("matchResults");
@@ -49,9 +48,6 @@ export default function ResultsPage() {
       return;
     }
 
-    console.log("Starting explanation fetch...");
-    setIsExplaining(true);
-    setExplanation("");
     setDisplayedExplanation("");
 
     try {
@@ -59,37 +55,18 @@ export default function ResultsPage() {
       const decoder = new TextDecoder();
       let accumulatedText = "";
 
-      const timeout = setTimeout(() => {
-        console.log("Explanation fetch timed out");
-        setExplanation(
-          "Explanation is taking longer than expected. This doctor matches your preferences based on location, availability, and specializations."
-        );
-        setDisplayedExplanation(
-          "Explanation is taking longer than expected. This doctor matches your preferences based on location, availability, and specializations."
-        );
-        setIsExplaining(false);
-      }, 10000);
-
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
         accumulatedText += chunk;
-        setExplanation(accumulatedText);
-        console.log("Received chunk:", chunk);
 
-        // Display text exactly as it comes from the server
         setDisplayedExplanation(accumulatedText);
       }
-
-      clearTimeout(timeout);
     } catch (error) {
       console.error("Failed to fetch explanation:", error);
-      setExplanation("Unable to load explanation at this time.");
       setDisplayedExplanation("Unable to load explanation at this time.");
-    } finally {
-      setIsExplaining(false);
     }
   }, [intake]);
 
@@ -293,7 +270,7 @@ export default function ResultsPage() {
               >
                 {isTopMatch && (
                   <div className="mb-3 text-center">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-sm">
+                    <span className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-sm">
                       ⭐ Top Match
                     </span>
                   </div>
@@ -318,15 +295,17 @@ export default function ResultsPage() {
                     {clinician.fullName}
                   </h2>
                 </div>
-                <div className="flex items-center gap-3 text-sm mb-3 justify-center">
-                  <div className="flex items-center gap-1 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                    <span className="text-blue-700 font-semibold">Score:</span>
-                    <span className="text-blue-800 font-bold">
+                <div className="flex items-center gap-2 sm:gap-3 text-sm mb-3 justify-center">
+                  <div className="flex items-center gap-1 bg-blue-50 px-2 py-1 sm:px-3 sm:py-1 rounded-full border border-blue-200">
+                    <span className="text-blue-700 font-semibold text-xs sm:text-sm">
+                      Score:
+                    </span>
+                    <span className="text-blue-800 font-bold text-xs sm:text-sm">
                       {Math.round(clinician.score)}%
                     </span>
                   </div>
                   {clinician.isAvailableNow && (
-                    <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold border border-green-200 shadow-sm">
+                    <span className="px-2 py-1 sm:px-3 sm:py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold border border-green-200 shadow-sm">
                       Available Now
                     </span>
                   )}
@@ -336,11 +315,11 @@ export default function ResultsPage() {
                     <span className="font-semibold text-[#43635f] mb-2 block">
                       Matching Criteria:
                     </span>
-                    <div className="flex flex-wrap gap-2 justify-center">
+                    <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
                       {overlapLabels(clinician.overlapping).map((criteria) => (
                         <span
                           key={criteria}
-                          className="bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-800 text-xs px-3 py-1.5 rounded-full border border-blue-200 font-medium"
+                          className="bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-800 text-xs px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border border-blue-200 font-medium"
                         >
                           {criteria}
                         </span>
@@ -359,34 +338,21 @@ export default function ResultsPage() {
                     </div>
 
                     <div className="min-h-[120px]">
-                      {isExplaining ? (
-                        <div className="flex items-center space-x-2">
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600" />
-                          <span className="text-blue-600">
-                            Generating explanation...
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="h-48 overflow-y-auto pr-2 border border-gray-200 rounded-lg p-3 bg-white">
-                          {displayedExplanation ? (
-                            <div className="space-y-2">
-                              <p className="text-sm leading-relaxed text-[#43635f] whitespace-pre-wrap">
-                                {displayedExplanation}
-                              </p>
-                            </div>
-                          ) : (
-                            <div className="space-y-2">
-                              <p className="text-sm text-gray-500">
-                                Loading explanation...
-                              </p>
-                              <p className="text-xs text-gray-400">
-                                This doctor matches your preferences based on
-                                location, availability, and specializations.
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      )}
+                      <div className="h-48 overflow-y-auto pr-2 border border-gray-200 rounded-lg p-3 bg-white">
+                        {displayedExplanation ? (
+                          <div className="space-y-2">
+                            <p className="text-sm leading-relaxed text-[#43635f] whitespace-pre-wrap">
+                              {displayedExplanation}
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="space-y-2">
+                            <p className="text-sm text-gray-500">
+                              Loading explanation...
+                            </p>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
