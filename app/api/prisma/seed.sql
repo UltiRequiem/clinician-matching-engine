@@ -1,3 +1,175 @@
+
+-- === 50 NEW CLINICIANS FOR MORE OPTIONS ===
+-- IDs: c1001-c1050
+-- Gender, state, language, insurance, appointment type, clinical need, and time slot are cycled for variety
+
+-- Clinicians
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('c1001', 'Dr. Newdoc 1', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c1002', 'Dr. Newdoc 2', 'male', 0, 1, CURRENT_TIMESTAMP),
+('c1003', 'Dr. Newdoc 3', 'non_binary', 1, 2, CURRENT_TIMESTAMP),
+('c1004', 'Dr. Newdoc 4', 'female', 0, 3, CURRENT_TIMESTAMP),
+('c1005', 'Dr. Newdoc 5', 'male', 1, 1, CURRENT_TIMESTAMP),
+('c1006', 'Dr. Newdoc 6', 'female', 1, 2, CURRENT_TIMESTAMP),
+('c1007', 'Dr. Newdoc 7', 'male', 0, 0, CURRENT_TIMESTAMP),
+('c1008', 'Dr. Newdoc 8', 'non_binary', 1, 1, CURRENT_TIMESTAMP),
+('c1009', 'Dr. Newdoc 9', 'female', 0, 2, CURRENT_TIMESTAMP),
+('c1010', 'Dr. Newdoc 10', 'male', 1, 3, CURRENT_TIMESTAMP),
+('c1011', 'Dr. Newdoc 11', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c1012', 'Dr. Newdoc 12', 'male', 0, 1, CURRENT_TIMESTAMP),
+('c1013', 'Dr. Newdoc 13', 'non_binary', 1, 2, CURRENT_TIMESTAMP),
+('c1014', 'Dr. Newdoc 14', 'female', 0, 3, CURRENT_TIMESTAMP),
+('c1015', 'Dr. Newdoc 15', 'male', 1, 1, CURRENT_TIMESTAMP),
+('c1016', 'Dr. Newdoc 16', 'female', 1, 2, CURRENT_TIMESTAMP),
+('c1017', 'Dr. Newdoc 17', 'male', 0, 0, CURRENT_TIMESTAMP),
+('c1018', 'Dr. Newdoc 18', 'non_binary', 1, 1, CURRENT_TIMESTAMP),
+('c1019', 'Dr. Newdoc 19', 'female', 0, 2, CURRENT_TIMESTAMP),
+('c1020', 'Dr. Newdoc 20', 'male', 1, 3, CURRENT_TIMESTAMP),
+('c1021', 'Dr. Newdoc 21', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c1022', 'Dr. Newdoc 22', 'male', 0, 1, CURRENT_TIMESTAMP),
+('c1023', 'Dr. Newdoc 23', 'non_binary', 1, 2, CURRENT_TIMESTAMP),
+('c1024', 'Dr. Newdoc 24', 'female', 0, 3, CURRENT_TIMESTAMP),
+('c1025', 'Dr. Newdoc 25', 'male', 1, 1, CURRENT_TIMESTAMP),
+('c1026', 'Dr. Newdoc 26', 'female', 1, 2, CURRENT_TIMESTAMP),
+('c1027', 'Dr. Newdoc 27', 'male', 0, 0, CURRENT_TIMESTAMP),
+('c1028', 'Dr. Newdoc 28', 'non_binary', 1, 1, CURRENT_TIMESTAMP),
+('c1029', 'Dr. Newdoc 29', 'female', 0, 2, CURRENT_TIMESTAMP),
+('c1030', 'Dr. Newdoc 30', 'male', 1, 3, CURRENT_TIMESTAMP),
+('c1031', 'Dr. Newdoc 31', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c1032', 'Dr. Newdoc 32', 'male', 0, 1, CURRENT_TIMESTAMP),
+('c1033', 'Dr. Newdoc 33', 'non_binary', 1, 2, CURRENT_TIMESTAMP),
+('c1034', 'Dr. Newdoc 34', 'female', 0, 3, CURRENT_TIMESTAMP),
+('c1035', 'Dr. Newdoc 35', 'male', 1, 1, CURRENT_TIMESTAMP),
+('c1036', 'Dr. Newdoc 36', 'female', 1, 2, CURRENT_TIMESTAMP),
+('c1037', 'Dr. Newdoc 37', 'male', 0, 0, CURRENT_TIMESTAMP),
+('c1038', 'Dr. Newdoc 38', 'non_binary', 1, 1, CURRENT_TIMESTAMP),
+('c1039', 'Dr. Newdoc 39', 'female', 0, 2, CURRENT_TIMESTAMP),
+('c1040', 'Dr. Newdoc 40', 'male', 1, 3, CURRENT_TIMESTAMP),
+('c1041', 'Dr. Newdoc 41', 'female', 1, 0, CURRENT_TIMESTAMP),
+('c1042', 'Dr. Newdoc 42', 'male', 0, 1, CURRENT_TIMESTAMP),
+('c1043', 'Dr. Newdoc 43', 'non_binary', 1, 2, CURRENT_TIMESTAMP),
+('c1044', 'Dr. Newdoc 44', 'female', 0, 3, CURRENT_TIMESTAMP),
+('c1045', 'Dr. Newdoc 45', 'male', 1, 1, CURRENT_TIMESTAMP),
+('c1046', 'Dr. Newdoc 46', 'female', 1, 2, CURRENT_TIMESTAMP),
+('c1047', 'Dr. Newdoc 47', 'male', 0, 0, CURRENT_TIMESTAMP),
+('c1048', 'Dr. Newdoc 48', 'non_binary', 1, 1, CURRENT_TIMESTAMP),
+('c1049', 'Dr. Newdoc 49', 'female', 0, 2, CURRENT_TIMESTAMP),
+('c1050', 'Dr. Newdoc 50', 'male', 1, 3, CURRENT_TIMESTAMP);
+
+-- States Licensed (cycle: CA, NY, TX, FL)
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('cs1001', 'c1001', 'CA'), ('cs1002', 'c1002', 'NY'), ('cs1003', 'c1003', 'TX'), ('cs1004', 'c1004', 'FL'),
+('cs1005', 'c1005', 'CA'), ('cs1006', 'c1006', 'NY'), ('cs1007', 'c1007', 'TX'), ('cs1008', 'c1008', 'FL'),
+('cs1009', 'c1009', 'CA'), ('cs1010', 'c1010', 'NY'), ('cs1011', 'c1011', 'TX'), ('cs1012', 'c1012', 'FL'),
+('cs1013', 'c1013', 'CA'), ('cs1014', 'c1014', 'NY'), ('cs1015', 'c1015', 'TX'), ('cs1016', 'c1016', 'FL'),
+('cs1017', 'c1017', 'CA'), ('cs1018', 'c1018', 'NY'), ('cs1019', 'c1019', 'TX'), ('cs1020', 'c1020', 'FL'),
+('cs1021', 'c1021', 'CA'), ('cs1022', 'c1022', 'NY'), ('cs1023', 'c1023', 'TX'), ('cs1024', 'c1024', 'FL'),
+('cs1025', 'c1025', 'CA'), ('cs1026', 'c1026', 'NY'), ('cs1027', 'c1027', 'TX'), ('cs1028', 'c1028', 'FL'),
+('cs1029', 'c1029', 'CA'), ('cs1030', 'c1030', 'NY'), ('cs1031', 'c1031', 'TX'), ('cs1032', 'c1032', 'FL'),
+('cs1033', 'c1033', 'CA'), ('cs1034', 'c1034', 'NY'), ('cs1035', 'c1035', 'TX'), ('cs1036', 'c1036', 'FL'),
+('cs1037', 'c1037', 'CA'), ('cs1038', 'c1038', 'NY'), ('cs1039', 'c1039', 'TX'), ('cs1040', 'c1040', 'FL'),
+('cs1041', 'c1041', 'CA'), ('cs1042', 'c1042', 'NY'), ('cs1043', 'c1043', 'TX'), ('cs1044', 'c1044', 'FL'),
+('cs1045', 'c1045', 'CA'), ('cs1046', 'c1046', 'NY');
+
+-- Languages Spoken (cycle: English, Spanish, French)
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('cl1001', 'c1001', 'English'), ('cl1002', 'c1002', 'Spanish'), ('cl1003', 'c1003', 'French'),
+('cl1004', 'c1004', 'English'), ('cl1005', 'c1005', 'Spanish'), ('cl1006', 'c1006', 'French'),
+('cl1007', 'c1007', 'English'), ('cl1008', 'c1008', 'Spanish'), ('cl1009', 'c1009', 'French'),
+('cl1010', 'c1010', 'English'), ('cl1011', 'c1011', 'Spanish'), ('cl1012', 'c1012', 'French'),
+('cl1013', 'c1013', 'English'), ('cl1014', 'c1014', 'Spanish'), ('cl1015', 'c1015', 'French'),
+('cl1016', 'c1016', 'English'), ('cl1017', 'c1017', 'Spanish'), ('cl1018', 'c1018', 'French'),
+('cl1019', 'c1019', 'English'), ('cl1020', 'c1020', 'Spanish'), ('cl1021', 'c1021', 'French'),
+('cl1022', 'c1022', 'English'), ('cl1023', 'c1023', 'Spanish'), ('cl1024', 'c1024', 'French'),
+('cl1025', 'c1025', 'English'), ('cl1026', 'c1026', 'Spanish'), ('cl1027', 'c1027', 'French'),
+('cl1028', 'c1028', 'English'), ('cl1029', 'c1029', 'Spanish'), ('cl1030', 'c1030', 'French'),
+('cl1031', 'c1031', 'English'), ('cl1032', 'c1032', 'Spanish'), ('cl1033', 'c1033', 'French'),
+('cl1034', 'c1034', 'English'), ('cl1035', 'c1035', 'Spanish'), ('cl1036', 'c1036', 'French'),
+('cl1037', 'c1037', 'English'), ('cl1038', 'c1038', 'Spanish'), ('cl1039', 'c1039', 'French'),
+('cl1040', 'c1040', 'English'), ('cl1041', 'c1041', 'Spanish'), ('cl1042', 'c1042', 'French'),
+('cl1043', 'c1043', 'English'), ('cl1044', 'c1044', 'Spanish'), ('cl1045', 'c1045', 'French'),
+('cl1046', 'c1046', 'English'), ('cl1047', 'c1047', 'Spanish'), ('cl1048', 'c1048', 'French'),
+('cl1049', 'c1049', 'English'), ('cl1050', 'c1050', 'Spanish');
+
+-- Insurances Accepted (cycle: Aetna, BlueCross, Cigna)
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('ci1001', 'c1001', 'Aetna'), ('ci1002', 'c1002', 'BlueCross'), ('ci1003', 'c1003', 'Cigna'),
+('ci1004', 'c1004', 'Aetna'), ('ci1005', 'c1005', 'BlueCross'), ('ci1006', 'c1006', 'Cigna'),
+('ci1007', 'c1007', 'Aetna'), ('ci1008', 'c1008', 'BlueCross'), ('ci1009', 'c1009', 'Cigna'),
+('ci1010', 'c1010', 'Aetna'), ('ci1011', 'c1011', 'BlueCross'), ('ci1012', 'c1012', 'Cigna'),
+('ci1013', 'c1013', 'Aetna'), ('ci1014', 'c1014', 'BlueCross'), ('ci1015', 'c1015', 'Cigna'),
+('ci1016', 'c1016', 'Aetna'), ('ci1017', 'c1017', 'BlueCross'), ('ci1018', 'c1018', 'Cigna'),
+('ci1019', 'c1019', 'Aetna'), ('ci1020', 'c1020', 'BlueCross'), ('ci1021', 'c1021', 'Cigna'),
+('ci1022', 'c1022', 'Aetna'), ('ci1023', 'c1023', 'BlueCross'), ('ci1024', 'c1024', 'Cigna'),
+('ci1025', 'c1025', 'Aetna'), ('ci1026', 'c1026', 'BlueCross'), ('ci1027', 'c1027', 'Cigna'),
+('ci1028', 'c1028', 'Aetna'), ('ci1029', 'c1029', 'BlueCross'), ('ci1030', 'c1030', 'Cigna'),
+('ci1031', 'c1031', 'Aetna'), ('ci1032', 'c1032', 'BlueCross'), ('ci1033', 'c1033', 'Cigna'),
+('ci1034', 'c1034', 'Aetna'), ('ci1035', 'c1035', 'BlueCross'), ('ci1036', 'c1036', 'Cigna'),
+('ci1037', 'c1037', 'Aetna'), ('ci1038', 'c1038', 'BlueCross'), ('ci1039', 'c1039', 'Cigna'),
+('ci1040', 'c1040', 'Aetna'), ('ci1041', 'c1041', 'BlueCross'), ('ci1042', 'c1042', 'Cigna'),
+('ci1043', 'c1043', 'Aetna'), ('ci1044', 'c1044', 'BlueCross'), ('ci1045', 'c1045', 'Cigna'),
+('ci1046', 'c1046', 'Aetna'), ('ci1047', 'c1047', 'BlueCross'), ('ci1048', 'c1048', 'Cigna'),
+('ci1049', 'c1049', 'Aetna'), ('ci1050', 'c1050', 'BlueCross');
+
+-- Appointment Types (cycle: therapy, medication)
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('cat1001', 'c1001', 'therapy'), ('cat1002', 'c1002', 'medication'),
+('cat1003', 'c1003', 'therapy'), ('cat1004', 'c1004', 'medication'),
+('cat1005', 'c1005', 'therapy'), ('cat1006', 'c1006', 'medication'),
+('cat1007', 'c1007', 'therapy'), ('cat1008', 'c1008', 'medication'),
+('cat1009', 'c1009', 'therapy'), ('cat1010', 'c1010', 'medication'),
+('cat1011', 'c1011', 'therapy'), ('cat1012', 'c1012', 'medication'),
+('cat1013', 'c1013', 'therapy'), ('cat1014', 'c1014', 'medication'),
+('cat1015', 'c1015', 'therapy'), ('cat1016', 'c1016', 'medication'),
+('cat1017', 'c1017', 'therapy'), ('cat1018', 'c1018', 'medication'),
+('cat1019', 'c1019', 'therapy'), ('cat1020', 'c1020', 'medication'),
+('cat1021', 'c1021', 'therapy'), ('cat1022', 'c1022', 'medication'),
+('cat1023', 'c1023', 'therapy'), ('cat1024', 'c1024', 'medication'),
+('cat1025', 'c1025', 'therapy'), ('cat1026', 'c1026', 'medication'),
+('cat1027', 'c1027', 'therapy'), ('cat1028', 'c1028', 'medication'),
+('cat1029', 'c1029', 'therapy'), ('cat1030', 'c1030', 'medication'),
+('cat1031', 'c1031', 'therapy'), ('cat1032', 'c1032', 'medication'),
+('cat1033', 'c1033', 'therapy'), ('cat1034', 'c1034', 'medication'),
+('cat1035', 'c1035', 'therapy'), ('cat1036', 'c1036', 'medication'),
+('cat1037', 'c1037', 'therapy'), ('cat1038', 'c1038', 'medication'),
+('cat1039', 'c1039', 'therapy'), ('cat1040', 'c1040', 'medication'),
+('cat1041', 'c1041', 'therapy'), ('cat1042', 'c1042', 'medication'),
+('cat1043', 'c1043', 'therapy'), ('cat1044', 'c1044', 'medication'),
+('cat1045', 'c1045', 'therapy'), ('cat1046', 'c1046', 'medication'),
+('cat1047', 'c1047', 'therapy'), ('cat1048', 'c1048', 'medication'),
+('cat1049', 'c1049', 'therapy'), ('cat1050', 'c1050', 'medication');
+
+-- Clinical Specialties (cycle: anxiety, depression, trauma, perinatal, lgbtq, couples, grief, stress)
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('ccn1001', 'c1001', 'anxiety'), ('ccn1002', 'c1002', 'depression'), ('ccn1003', 'c1003', 'trauma'), ('ccn1004', 'c1004', 'perinatal'),
+('ccn1005', 'c1005', 'lgbtq'), ('ccn1006', 'c1006', 'couples'), ('ccn1007', 'c1007', 'grief'), ('ccn1008', 'c1008', 'stress'),
+('ccn1009', 'c1009', 'anxiety'), ('ccn1010', 'c1010', 'depression'), ('ccn1011', 'c1011', 'trauma'), ('ccn1012', 'c1012', 'perinatal'),
+('ccn1013', 'c1013', 'lgbtq'), ('ccn1014', 'c1014', 'couples'), ('ccn1015', 'c1015', 'grief'), ('ccn1016', 'c1016', 'stress'),
+('ccn1017', 'c1017', 'anxiety'), ('ccn1018', 'c1018', 'depression'), ('ccn1019', 'c1019', 'trauma'), ('ccn1020', 'c1020', 'perinatal'),
+('ccn1021', 'c1021', 'lgbtq'), ('ccn1022', 'c1022', 'couples'), ('ccn1023', 'c1023', 'grief'), ('ccn1024', 'c1024', 'stress'),
+('ccn1025', 'c1025', 'anxiety'), ('ccn1026', 'c1026', 'depression'), ('ccn1027', 'c1027', 'trauma'), ('ccn1028', 'c1028', 'perinatal'),
+('ccn1029', 'c1029', 'lgbtq'), ('ccn1030', 'c1030', 'couples'), ('ccn1031', 'c1031', 'grief'), ('ccn1032', 'c1032', 'stress'),
+('ccn1033', 'c1033', 'anxiety'), ('ccn1034', 'c1034', 'depression'), ('ccn1035', 'c1035', 'trauma'), ('ccn1036', 'c1036', 'perinatal'),
+('ccn1037', 'c1037', 'lgbtq'), ('ccn1038', 'c1038', 'couples'), ('ccn1039', 'c1039', 'grief'), ('ccn1040', 'c1040', 'stress'),
+('ccn1041', 'c1041', 'anxiety'), ('ccn1042', 'c1042', 'depression'), ('ccn1043', 'c1043', 'trauma'), ('ccn1044', 'c1044', 'perinatal'),
+('ccn1045', 'c1045', 'lgbtq'), ('ccn1046', 'c1046', 'couples'), ('ccn1047', 'c1047', 'grief'), ('ccn1048', 'c1048', 'stress'),
+('ccn1049', 'c1049', 'anxiety'), ('ccn1050', 'c1050', 'depression');
+
+-- Time Slots (cycle: morning, afternoon, evening, night)
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('cts1001', 'c1001', 'morning'), ('cts1002', 'c1002', 'afternoon'), ('cts1003', 'c1003', 'evening'), ('cts1004', 'c1004', 'night'),
+('cts1005', 'c1005', 'morning'), ('cts1006', 'c1006', 'afternoon'), ('cts1007', 'c1007', 'evening'), ('cts1008', 'c1008', 'night'),
+('cts1009', 'c1009', 'morning'), ('cts1010', 'c1010', 'afternoon'), ('cts1011', 'c1011', 'evening'), ('cts1012', 'c1012', 'night'),
+('cts1013', 'c1013', 'morning'), ('cts1014', 'c1014', 'afternoon'), ('cts1015', 'c1015', 'evening'), ('cts1016', 'c1016', 'night'),
+('cts1017', 'c1017', 'morning'), ('cts1018', 'c1018', 'afternoon'), ('cts1019', 'c1019', 'evening'), ('cts1020', 'c1020', 'night'),
+('cts1021', 'c1021', 'morning'), ('cts1022', 'c1022', 'afternoon'), ('cts1023', 'c1023', 'evening'), ('cts1024', 'c1024', 'night'),
+('cts1025', 'c1025', 'morning'), ('cts1026', 'c1026', 'afternoon'), ('cts1027', 'c1027', 'evening'), ('cts1028', 'c1028', 'night'),
+('cts1029', 'c1029', 'morning'), ('cts1030', 'c1030', 'afternoon'), ('cts1031', 'c1031', 'evening'), ('cts1032', 'c1032', 'night'),
+('cts1033', 'c1033', 'morning'), ('cts1034', 'c1034', 'afternoon'), ('cts1035', 'c1035', 'evening'), ('cts1036', 'c1036', 'night'),
+('cts1037', 'c1037', 'morning'), ('cts1038', 'c1038', 'afternoon'), ('cts1039', 'c1039', 'evening'), ('cts1040', 'c1040', 'night'),
+('cts1041', 'c1041', 'morning'), ('cts1042', 'c1042', 'afternoon'), ('cts1043', 'c1043', 'evening'), ('cts1044', 'c1044', 'night'),
+('cts1045', 'c1045', 'morning'), ('cts1046', 'c1046', 'afternoon'), ('cts1047', 'c1047', 'evening'), ('cts1048', 'c1048', 'night'),
+('cts1049', 'c1049', 'morning'), ('cts1050', 'c1050', 'afternoon');
 -- Seed for Clinicians and related tables
 
 -- 20 Clinicians
