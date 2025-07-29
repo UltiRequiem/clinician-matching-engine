@@ -137,6 +137,11 @@ The backend is located in the `/app/api` folder and is built with [NestJS](https
 
 ## Backend Components
 
+> API URL: https://lunajoy-production.up.railway.app/
+
+The backend is built with Nest.js using Prisma as it's ORM and Turso as the database provider.
+And deployed using Railway.
+
 - **src/app.module.ts**
 - The root module that imports all other modules (database, matching engine, config, etc.).
 
