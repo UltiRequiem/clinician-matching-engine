@@ -122,10 +122,6 @@ export const CLINICAL_NEEDS = [
 
 export const TIME_SLOTS = [
   {
-    id: "early_morning",
-    label: "Early Morning (6am - 9am)",
-  },
-  {
     id: "morning",
     label: "Morning (9am - 12pm)",
   },
@@ -134,11 +130,11 @@ export const TIME_SLOTS = [
     label: "Afternoon (12pm - 3pm)",
   },
   {
-    id: "late_afternoon",
-    label: "Late Afternoon (3pm - 6pm)",
+    id: "evening",
+    label: "Evening (3pm - 6pm)",
   },
   {
-    id: "evening",
-    label: "Evening (6pm - 9pm)",
+    id: "night",
+    label: "Night (6pm - 9pm)",
   },
 ] as const;
