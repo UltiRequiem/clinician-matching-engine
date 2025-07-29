@@ -98,7 +98,7 @@ export default function ResultsPage() {
             "chosenDoctor",
             JSON.stringify(results[current])
           );
-          
+
           router.push("/chosen");
         } else {
           if (current + 1 < results.length) {
@@ -127,23 +127,110 @@ export default function ResultsPage() {
 
   if (noMore || !results.length) {
     return (
-      <div className="bg-[#fffced] min-h-screen flex items-center justify-center">
+      <div className="bg-[#fffced] min-h-screen flex items-center justify-center p-4">
         <Card className="mx-auto max-w-2xl shadow-lg rounded-lg p-8">
           <CardHeader>
             <CardTitle className="text-3xl text-[#43635f] text-center mb-2">
-              No more options
+              {!results.length ? "No Doctors Available" : "No More Options"}
             </CardTitle>
             <CardDescription className="text-center text-[#43635f] mb-6">
-              Start your search again to see more clinicians.
+              {!results.length
+                ? "We couldn't find any doctors matching your current criteria. Don't worry - this is common and we can help you find alternatives."
+                : "You've seen all available matches. Let's try a new search with different criteria."}
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col items-center">
-            <Button
-              onClick={() => router.push("/")}
-              className="w-full max-w-xs mt-2"
-            >
-              Start New Search
-            </Button>
+          <CardContent className="flex flex-col items-center space-y-6">
+            {!results.length && (
+              <div className="w-full max-w-md">
+                <h3 className="text-lg font-semibold text-[#43635f] mb-3 text-center">
+                  Try these suggestions:
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    <div className="flex-shrink-0 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                      1
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-[#43635f]">
+                        Expand your location
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Try nearby states or cities
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                    <div className="flex-shrink-0 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                      2
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-[#43635f]">
+                        Adjust appointment type
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Try virtual or in-person options
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3 p-3 bg-purple-50 rounded-lg border border-purple-200">
+                    <div className="flex-shrink-0 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                      3
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-[#43635f]">
+                        Check different insurance
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Verify your insurance provider
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3 p-3 bg-orange-50 rounded-lg border border-orange-200">
+                    <div className="flex-shrink-0 w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                      4
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-[#43635f]">
+                        Be flexible with preferences
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Consider different time slots or languages
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
+              <Button
+                onClick={() => router.push("/")}
+                className="flex-1 bg-[#ffb21b] text-[#43635f] hover:bg-[#ffb21b]/90"
+              >
+                {!results.length ? "Try New Search" : "Start New Search"}
+              </Button>
+              {!results.length && (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    // Clear session storage and go back to form
+                    sessionStorage.removeItem("matchResults");
+                    sessionStorage.removeItem("matchIntake");
+                    router.push("/");
+                  }}
+                  className="flex-1"
+                >
+                  Clear & Restart
+                </Button>
+              )}
+            </div>
+
+            {!results.length && (
+              <p className="text-xs text-gray-500 text-center mt-4">
+                Need immediate help? Contact our support team for personalized
+                assistance.
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>

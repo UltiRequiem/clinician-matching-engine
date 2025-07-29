@@ -1,3 +1,163 @@
+
+-- === 30 EXTRA MEDICATION CLINICIANS ===
+-- IDs: medx1-medx30
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('medx1', 'Dr. MedX 1', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx2', 'Dr. MedX 2', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx3', 'Dr. MedX 3', 'non_binary', 1, 0, CURRENT_TIMESTAMP),
+('medx4', 'Dr. MedX 4', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx5', 'Dr. MedX 5', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx6', 'Dr. MedX 6', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx7', 'Dr. MedX 7', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx8', 'Dr. MedX 8', 'non_binary', 1, 0, CURRENT_TIMESTAMP),
+('medx9', 'Dr. MedX 9', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx10', 'Dr. MedX 10', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx11', 'Dr. MedX 11', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx12', 'Dr. MedX 12', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx13', 'Dr. MedX 13', 'non_binary', 1, 0, CURRENT_TIMESTAMP),
+('medx14', 'Dr. MedX 14', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx15', 'Dr. MedX 15', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx16', 'Dr. MedX 16', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx17', 'Dr. MedX 17', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx18', 'Dr. MedX 18', 'non_binary', 1, 0, CURRENT_TIMESTAMP),
+('medx19', 'Dr. MedX 19', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx20', 'Dr. MedX 20', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx21', 'Dr. MedX 21', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx22', 'Dr. MedX 22', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx23', 'Dr. MedX 23', 'non_binary', 1, 0, CURRENT_TIMESTAMP),
+('medx24', 'Dr. MedX 24', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx25', 'Dr. MedX 25', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx26', 'Dr. MedX 26', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx27', 'Dr. MedX 27', 'male', 1, 0, CURRENT_TIMESTAMP),
+('medx28', 'Dr. MedX 28', 'non_binary', 1, 0, CURRENT_TIMESTAMP),
+('medx29', 'Dr. MedX 29', 'female', 1, 0, CURRENT_TIMESTAMP),
+('medx30', 'Dr. MedX 30', 'male', 1, 0, CURRENT_TIMESTAMP);
+
+-- States (cycle: CA, NY, TX, FL)
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('medxcs1', 'medx1', 'CA'), ('medxcs2', 'medx2', 'NY'), ('medxcs3', 'medx3', 'TX'), ('medxcs4', 'medx4', 'FL'),
+('medxcs5', 'medx5', 'CA'), ('medxcs6', 'medx6', 'NY'), ('medxcs7', 'medx7', 'TX'), ('medxcs8', 'medx8', 'FL'),
+('medxcs9', 'medx9', 'CA'), ('medxcs10', 'medx10', 'NY'), ('medxcs11', 'medx11', 'TX'), ('medxcs12', 'medx12', 'FL'),
+('medxcs13', 'medx13', 'CA'), ('medxcs14', 'medx14', 'NY'), ('medxcs15', 'medx15', 'TX'), ('medxcs16', 'medx16', 'FL'),
+('medxcs17', 'medx17', 'CA'), ('medxcs18', 'medx18', 'NY'), ('medxcs19', 'medx19', 'TX'), ('medxcs20', 'medx20', 'FL'),
+('medxcs21', 'medx21', 'CA'), ('medxcs22', 'medx22', 'NY'), ('medxcs23', 'medx23', 'TX'), ('medxcs24', 'medx24', 'FL'),
+('medxcs25', 'medx25', 'CA'), ('medxcs26', 'medx26', 'NY'), ('medxcs27', 'medx27', 'TX'), ('medxcs28', 'medx28', 'FL'),
+('medxcs29', 'medx29', 'CA'), ('medxcs30', 'medx30', 'NY');
+
+-- Insurances (cycle: Aetna, BlueCross, Cigna)
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('medxci1', 'medx1', 'Aetna'), ('medxci2', 'medx2', 'BlueCross'), ('medxci3', 'medx3', 'Cigna'),
+('medxci4', 'medx4', 'Aetna'), ('medxci5', 'medx5', 'BlueCross'), ('medxci6', 'medx6', 'Cigna'),
+('medxci7', 'medx7', 'Aetna'), ('medxci8', 'medx8', 'BlueCross'), ('medxci9', 'medx9', 'Cigna'),
+('medxci10', 'medx10', 'Aetna'), ('medxci11', 'medx11', 'BlueCross'), ('medxci12', 'medx12', 'Cigna'),
+('medxci13', 'medx13', 'Aetna'), ('medxci14', 'medx14', 'BlueCross'), ('medxci15', 'medx15', 'Cigna'),
+('medxci16', 'medx16', 'Aetna'), ('medxci17', 'medx17', 'BlueCross'), ('medxci18', 'medx18', 'Cigna'),
+('medxci19', 'medx19', 'Aetna'), ('medxci20', 'medx20', 'BlueCross'), ('medxci21', 'medx21', 'Cigna'),
+('medxci22', 'medx22', 'Aetna'), ('medxci23', 'medx23', 'BlueCross'), ('medxci24', 'medx24', 'Cigna'),
+('medxci25', 'medx25', 'Aetna'), ('medxci26', 'medx26', 'BlueCross'), ('medxci27', 'medx27', 'Cigna'),
+('medxci28', 'medx28', 'Aetna'), ('medxci29', 'medx29', 'BlueCross'), ('medxci30', 'medx30', 'Cigna');
+
+-- Appointment Type: medication
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('medxcat1', 'medx1', 'medication'), ('medxcat2', 'medx2', 'medication'), ('medxcat3', 'medx3', 'medication'),
+('medxcat4', 'medx4', 'medication'), ('medxcat5', 'medx5', 'medication'), ('medxcat6', 'medx6', 'medication'),
+('medxcat7', 'medx7', 'medication'), ('medxcat8', 'medx8', 'medication'), ('medxcat9', 'medx9', 'medication'),
+('medxcat10', 'medx10', 'medication'), ('medxcat11', 'medx11', 'medication'), ('medxcat12', 'medx12', 'medication'),
+('medxcat13', 'medx13', 'medication'), ('medxcat14', 'medx14', 'medication'), ('medxcat15', 'medx15', 'medication'),
+('medxcat16', 'medx16', 'medication'), ('medxcat17', 'medx17', 'medication'), ('medxcat18', 'medx18', 'medication'),
+('medxcat19', 'medx19', 'medication'), ('medxcat20', 'medx20', 'medication'), ('medxcat21', 'medx21', 'medication'),
+('medxcat22', 'medx22', 'medication'), ('medxcat23', 'medx23', 'medication'), ('medxcat24', 'medx24', 'medication'),
+('medxcat25', 'medx25', 'medication'), ('medxcat26', 'medx26', 'medication'), ('medxcat27', 'medx27', 'medication'),
+('medxcat28', 'medx28', 'medication'), ('medxcat29', 'medx29', 'medication'), ('medxcat30', 'medx30', 'medication');
+
+-- Language (cycle: English, Spanish, French)
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('medxcl1', 'medx1', 'English'), ('medxcl2', 'medx2', 'Spanish'), ('medxcl3', 'medx3', 'French'),
+('medxcl4', 'medx4', 'English'), ('medxcl5', 'medx5', 'Spanish'), ('medxcl6', 'medx6', 'French'),
+('medxcl7', 'medx7', 'English'), ('medxcl8', 'medx8', 'Spanish'), ('medxcl9', 'medx9', 'French'),
+('medxcl10', 'medx10', 'English'), ('medxcl11', 'medx11', 'Spanish'), ('medxcl12', 'medx12', 'French'),
+('medxcl13', 'medx13', 'English'), ('medxcl14', 'medx14', 'Spanish'), ('medxcl15', 'medx15', 'French'),
+('medxcl16', 'medx16', 'English'), ('medxcl17', 'medx17', 'Spanish'), ('medxcl18', 'medx18', 'French'),
+('medxcl19', 'medx19', 'English'), ('medxcl20', 'medx20', 'Spanish'), ('medxcl21', 'medx21', 'French'),
+('medxcl22', 'medx22', 'English'), ('medxcl23', 'medx23', 'Spanish'), ('medxcl24', 'medx24', 'French'),
+('medxcl25', 'medx25', 'English'), ('medxcl26', 'medx26', 'Spanish'), ('medxcl27', 'medx27', 'French'),
+('medxcl28', 'medx28', 'English'), ('medxcl29', 'medx29', 'Spanish'), ('medxcl30', 'medx30', 'French');
+
+-- Clinical Need (cycle: anxiety, depression, trauma, perinatal, lgbtq, couples, grief, stress)
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('medxccn1', 'medx1', 'anxiety'), ('medxccn2', 'medx2', 'depression'), ('medxccn3', 'medx3', 'trauma'), ('medxccn4', 'medx4', 'perinatal'),
+('medxccn5', 'medx5', 'lgbtq'), ('medxccn6', 'medx6', 'couples'), ('medxccn7', 'medx7', 'grief'), ('medxccn8', 'medx8', 'stress'),
+('medxccn9', 'medx9', 'anxiety'), ('medxccn10', 'medx10', 'depression'), ('medxccn11', 'medx11', 'trauma'), ('medxccn12', 'medx12', 'perinatal'),
+('medxccn13', 'medx13', 'lgbtq'), ('medxccn14', 'medx14', 'couples'), ('medxccn15', 'medx15', 'grief'), ('medxccn16', 'medx16', 'stress'),
+('medxccn17', 'medx17', 'anxiety'), ('medxccn18', 'medx18', 'depression'), ('medxccn19', 'medx19', 'trauma'), ('medxccn20', 'medx20', 'perinatal'),
+('medxccn21', 'medx21', 'lgbtq'), ('medxccn22', 'medx22', 'couples'), ('medxccn23', 'medx23', 'grief'), ('medxccn24', 'medx24', 'stress'),
+('medxccn25', 'medx25', 'anxiety'), ('medxccn26', 'medx26', 'depression'), ('medxccn27', 'medx27', 'trauma'), ('medxccn28', 'medx28', 'perinatal'),
+('medxccn29', 'medx29', 'lgbtq'), ('medxccn30', 'medx30', 'couples');
+
+-- Time Slot (cycle: morning, afternoon, evening, night)
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('medxcts1', 'medx1', 'morning'), ('medxcts2', 'medx2', 'afternoon'), ('medxcts3', 'medx3', 'evening'), ('medxcts4', 'medx4', 'night'),
+('medxcts5', 'medx5', 'morning'), ('medxcts6', 'medx6', 'afternoon'), ('medxcts7', 'medx7', 'evening'), ('medxcts8', 'medx8', 'night'),
+('medxcts9', 'medx9', 'morning'), ('medxcts10', 'medx10', 'afternoon'), ('medxcts11', 'medx11', 'evening'), ('medxcts12', 'medx12', 'night'),
+('medxcts13', 'medx13', 'morning'), ('medxcts14', 'medx14', 'afternoon'), ('medxcts15', 'medx15', 'evening'), ('medxcts16', 'medx16', 'night'),
+('medxcts17', 'medx17', 'morning'), ('medxcts18', 'medx18', 'afternoon'), ('medxcts19', 'medx19', 'evening'), ('medxcts20', 'medx20', 'night'),
+('medxcts21', 'medx21', 'morning'), ('medxcts22', 'medx22', 'afternoon'), ('medxcts23', 'medx23', 'evening'), ('medxcts24', 'medx24', 'night'),
+('medxcts25', 'medx25', 'morning'), ('medxcts26', 'medx26', 'afternoon'), ('medxcts27', 'medx27', 'evening'), ('medxcts28', 'medx28', 'night'),
+('medxcts29', 'medx29', 'morning'), ('medxcts30', 'medx30', 'afternoon');
+
+-- === Medication Appointment Type: All State/Insurance Combinations ===
+-- States: CA, NY, TX, FL | Insurances: Aetna, BlueCross, Cigna
+-- 4 states x 3 insurances = 12 clinicians
+INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
+('med1', 'Dr. Med CA Aetna', 'female', 1, 0, CURRENT_TIMESTAMP),
+('med2', 'Dr. Med CA BlueCross', 'male', 1, 0, CURRENT_TIMESTAMP),
+('med3', 'Dr. Med CA Cigna', 'female', 1, 0, CURRENT_TIMESTAMP),
+('med4', 'Dr. Med NY Aetna', 'male', 1, 0, CURRENT_TIMESTAMP),
+('med5', 'Dr. Med NY BlueCross', 'female', 1, 0, CURRENT_TIMESTAMP),
+('med6', 'Dr. Med NY Cigna', 'male', 1, 0, CURRENT_TIMESTAMP),
+('med7', 'Dr. Med TX Aetna', 'female', 1, 0, CURRENT_TIMESTAMP),
+('med8', 'Dr. Med TX BlueCross', 'male', 1, 0, CURRENT_TIMESTAMP),
+('med9', 'Dr. Med TX Cigna', 'female', 1, 0, CURRENT_TIMESTAMP),
+('med10', 'Dr. Med FL Aetna', 'male', 1, 0, CURRENT_TIMESTAMP),
+('med11', 'Dr. Med FL BlueCross', 'female', 1, 0, CURRENT_TIMESTAMP),
+('med12', 'Dr. Med FL Cigna', 'male', 1, 0, CURRENT_TIMESTAMP);
+
+INSERT INTO "ClinicianState" (id, clinicianId, state) VALUES
+('medcs1', 'med1', 'CA'), ('medcs2', 'med2', 'CA'), ('medcs3', 'med3', 'CA'),
+('medcs4', 'med4', 'NY'), ('medcs5', 'med5', 'NY'), ('medcs6', 'med6', 'NY'),
+('medcs7', 'med7', 'TX'), ('medcs8', 'med8', 'TX'), ('medcs9', 'med9', 'TX'),
+('medcs10', 'med10', 'FL'), ('medcs11', 'med11', 'FL'), ('medcs12', 'med12', 'FL');
+
+INSERT INTO "ClinicianInsurance" (id, clinicianId, insurance) VALUES
+('medci1', 'med1', 'Aetna'), ('medci2', 'med2', 'BlueCross'), ('medci3', 'med3', 'Cigna'),
+('medci4', 'med4', 'Aetna'), ('medci5', 'med5', 'BlueCross'), ('medci6', 'med6', 'Cigna'),
+('medci7', 'med7', 'Aetna'), ('medci8', 'med8', 'BlueCross'), ('medci9', 'med9', 'Cigna'),
+('medci10', 'med10', 'Aetna'), ('medci11', 'med11', 'BlueCross'), ('medci12', 'med12', 'Cigna');
+
+INSERT INTO "ClinicianAppointmentType" (id, clinicianId, type) VALUES
+('medcat1', 'med1', 'medication'), ('medcat2', 'med2', 'medication'), ('medcat3', 'med3', 'medication'),
+('medcat4', 'med4', 'medication'), ('medcat5', 'med5', 'medication'), ('medcat6', 'med6', 'medication'),
+('medcat7', 'med7', 'medication'), ('medcat8', 'med8', 'medication'), ('medcat9', 'med9', 'medication'),
+('medcat10', 'med10', 'medication'), ('medcat11', 'med11', 'medication'), ('medcat12', 'med12', 'medication');
+
+-- Add a language, clinical need, and time slot for completeness
+INSERT INTO "ClinicianLanguage" (id, clinicianId, language) VALUES
+('medcl1', 'med1', 'English'), ('medcl2', 'med2', 'Spanish'), ('medcl3', 'med3', 'French'),
+('medcl4', 'med4', 'English'), ('medcl5', 'med5', 'Spanish'), ('medcl6', 'med6', 'French'),
+('medcl7', 'med7', 'English'), ('medcl8', 'med8', 'Spanish'), ('medcl9', 'med9', 'French'),
+('medcl10', 'med10', 'English'), ('medcl11', 'med11', 'Spanish'), ('medcl12', 'med12', 'French');
+
+INSERT INTO "ClinicianClinicalNeed" (id, clinicianId, need) VALUES
+('medccn1', 'med1', 'anxiety'), ('medccn2', 'med2', 'depression'), ('medccn3', 'med3', 'trauma'),
+('medccn4', 'med4', 'perinatal'), ('medccn5', 'med5', 'lgbtq'), ('medccn6', 'med6', 'couples'),
+('medccn7', 'med7', 'grief'), ('medccn8', 'med8', 'stress'), ('medccn9', 'med9', 'anxiety'),
+('medccn10', 'med10', 'depression'), ('medccn11', 'med11', 'trauma'), ('medccn12', 'med12', 'perinatal');
+
+INSERT INTO "ClinicianTimeSlot" (id, clinicianId, slot) VALUES
+('medcts1', 'med1', 'morning'), ('medcts2', 'med2', 'afternoon'), ('medcts3', 'med3', 'evening'),
+('medcts4', 'med4', 'night'), ('medcts5', 'med5', 'morning'), ('medcts6', 'med6', 'afternoon'),
+('medcts7', 'med7', 'evening'), ('medcts8', 'med8', 'night'), ('medcts9', 'med9', 'morning'),
+('medcts10', 'med10', 'afternoon'), ('medcts11', 'med11', 'evening'), ('medcts12', 'med12', 'night');
 INSERT INTO "Clinician" (id, fullName, gender, isAvailableNow, matchCount, createdAt) VALUES
 ('c1001', 'Dr. Newdoc 1', 'female', 1, 0, CURRENT_TIMESTAMP),
 ('c1002', 'Dr. Newdoc 2', 'male', 0, 1, CURRENT_TIMESTAMP),
