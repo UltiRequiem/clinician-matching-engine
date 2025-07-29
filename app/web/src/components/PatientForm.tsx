@@ -88,6 +88,7 @@ export default function PatientForm() {
 			};
 
 			console.log(matchIntake);
+			console.log(JSON.stringify(matchIntake));
 
 			// Call the matching engine
 			const results = await matchClinicians(matchIntake);
@@ -148,11 +149,56 @@ export default function PatientForm() {
 		);
 	};
 
+	// TODO: Refactor this to be a generic form field
+	const StatesFormField = ({
+		field_name,
+		label,
+		data,
+	}: {
+		field_name:
+			| "state"
+			| "language"
+			| "gender_preference"
+			| "insurance_provider"
+			| "appointment_type"
+			| "urgency_level";
+		label: string;
+		data: { id: string; label: string }[];
+	}) => {
+		return (
+			<FormField
+				control={form.control}
+				name={field_name}
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>{label}</FormLabel>
+						<FormControl>
+							<Select onValueChange={field.onChange} defaultValue={field.value}>
+								<SelectTrigger className="w-full">
+									<SelectValue placeholder={`Select ${label.toLowerCase()}`} />
+								</SelectTrigger>
+								<SelectContent>
+									{data.map((item) => (
+										<SelectItem value={item.id} key={item.id}>
+											{item.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</FormControl>
+						<FormDescription />
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+		);
+	};
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 				<div className="flex-col grid grid-cols-1 md:grid-cols-3 gap-4">
-					<ParametrizedFormField
+					<StatesFormField
 						field_name="state"
 						label="State of residence"
 						data={STATES}

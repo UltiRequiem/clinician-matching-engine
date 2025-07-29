@@ -1,14 +1,40 @@
 export const STATES = [
-  "California",
-  "Texas",
-  "Florida",
-  "New York",
-  "Illinois",
-  "Pennsylvania",
-  "Ohio",
-  "Georgia",
-  "North Carolina",
-  "Michigan",
+  {
+    id: "CA",
+    label: "California",
+  },
+  {
+    id: "TX",
+    label: "Texas",
+  },
+  {
+    id: "FL",
+    label: "Florida",
+  },
+  {
+    id: "NY",
+    label: "New York",
+  },
+  {
+    id: "IL",
+    label: "Illinois",
+  },
+  {
+    id: "PA",
+    label: "Pennsylvania",
+  },
+  {
+    id: "GA",
+    label: "Georgia",
+  },
+  {
+    id: "NC",
+    label: "North Carolina",
+  },
+  {
+    id: "MI",
+    label: "Michigan",
+  },
 ];
 
 export const LANGUAGES = [
