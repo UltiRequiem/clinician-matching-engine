@@ -88,11 +88,22 @@ export function IntakeFormSelectors({
                     <SelectValue placeholder={item.placeholder} />
                   </SelectTrigger>
                   <SelectContent>
-                    {item.data.map((data_item, index) => (
-                      <SelectItem value={data_item} key={index}>
-                        {data_item}
-                      </SelectItem>
-                    ))}
+                    {item.data.map((data_item, ) => {
+                      if (typeof data_item === "string") {
+                        return (
+                          <SelectItem value={data_item} key={data_item}>
+                            {data_item}
+                          </SelectItem>
+                        );
+                      }
+
+                      return (
+
+                        <SelectItem value={data_item.id} key={data_item.id}>
+                          {data_item.label}
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
               </FormControl>
