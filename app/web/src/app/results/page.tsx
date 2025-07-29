@@ -268,13 +268,7 @@ export default function ResultsPage() {
                   else if (info.offset.x < -120) handleSwipe("left");
                 }}
               >
-                {isTopMatch && (
-                  <div className="mb-3 text-center">
-                    <span className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-sm">
-                      ⭐ Top Match
-                    </span>
-                  </div>
-                )}
+              
 
                 <div className="text-center mb-3">
                   <div className="flex justify-center mb-3">
@@ -296,17 +290,18 @@ export default function ResultsPage() {
                   </h2>
                 </div>
                 <div className="flex items-center gap-2 sm:gap-3 text-sm mb-3 justify-center">
-                  <div className="flex items-center gap-1 bg-blue-50 px-2 py-1 sm:px-3 sm:py-1 rounded-full border border-blue-200">
-                    <span className="text-blue-700 font-semibold text-xs sm:text-sm">
-                      Score:
+                  {isTopMatch && (
+                    <span className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-sm border border-yellow-300">
+                      ⭐ Top Match
                     </span>
-                    <span className="text-blue-800 font-bold text-xs sm:text-sm">
-                      {Math.round(clinician.score)}%
-                    </span>
-                  </div>
+                  )}
+                  <span className="inline-flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 border border-blue-300 shadow-sm">
+                    <span>Score:</span>
+                    <span className="font-bold">{Math.round(clinician.score)}%</span>
+                  </span>
                   {clinician.isAvailableNow && (
-                    <span className="px-2 py-1 sm:px-3 sm:py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold border border-green-200 shadow-sm">
-                      Available Now
+                    <span className="inline-flex items-center px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-green-200 to-green-300 text-green-800 border border-green-300 shadow-sm">
+                      <span className="mr-1">●</span>Available Now
                     </span>
                   )}
                 </div>
