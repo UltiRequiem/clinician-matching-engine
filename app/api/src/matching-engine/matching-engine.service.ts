@@ -6,8 +6,7 @@ import {
   ClinicianWithRelations,
 } from './entities/matching-engine.contract';
 import { openai } from '@ai-sdk/openai';
-import { generateText } from 'ai';
-import { Clinician } from '@prisma/client';
+import { streamText } from 'ai';
 
 @Injectable()
 export class MatchingEngineService {
@@ -28,30 +27,29 @@ export class MatchingEngineService {
 
     const topScored = this.rankAndScoreClinicians(clinicians, intake);
     const topMatch = topScored.shift()!;
-    const explanation = await this.generateTopMatchExplanation(
+    const explanation = this.generateTopMatchExplanation(
       intake,
       topMatch,
+      clinicians,
     );
 
-    return {
-      clinician: topMatch,
-      explanation,
-    };
+    return explanation;
   }
 
   public async getAllClinicians() {
     return await this.databaseService.listClinicians();
   }
 
-  private async generateTopMatchExplanation(
+  private generateTopMatchExplanation(
     intake: MatchIntakeDto,
     topMatch: ClinicianMatchScore,
+    clinicians: ClinicianWithRelations[],
   ) {
     const systemPrompt =
       'You are a helpful assistant that provides concise summaries of clinician matches.';
 
-    const { text } = await generateText({
-      model: openai('gpt-4o'),
+    const { textStream } = streamText({
+      model: openai('gpt-4o-mini'),
       messages: [
         {
           role: 'system',
@@ -59,21 +57,29 @@ export class MatchingEngineService {
         },
         {
           role: 'user',
-          content: this.buildUserPrompt(intake, topMatch),
+          content: this.buildUserPrompt(intake, topMatch, clinicians),
         },
       ],
     });
 
-    return text;
+    return textStream;
   }
 
   private buildUserPrompt(
     intake: MatchIntakeDto,
     topScored: ClinicianMatchScore,
+    clinicians: ClinicianWithRelations[],
   ) {
     return `Given the following clinicians and patient intake, provide a concise summary of the top match:
     Intake: ${JSON.stringify(intake)}
-    Clinicians: ${JSON.stringify(topScored)}`;
+    Clinicians: ${JSON.stringify(clinicians)}
+    Top Match: ${JSON.stringify(topScored)}
+
+    Compare the top match with other clinicians and explain why it is the best fit. 
+    Include details on overlapping specialties, languages, and other relevant factors.
+     Focus on the top match's strengths and how they align with the patient's needs.
+      Keep the explanation concise and informative.
+    `;
   }
 
   private rankAndScoreClinicians(

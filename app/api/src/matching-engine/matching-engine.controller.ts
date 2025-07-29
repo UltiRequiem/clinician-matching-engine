@@ -1,4 +1,5 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { MatchingEngineService } from './matching-engine.service';
 import { MatchIntakeDto } from './dto/match-intake.dto';
 
@@ -9,6 +10,20 @@ export class MatchingEngineController {
   @Post('match')
   async match(@Body() intake: MatchIntakeDto) {
     return this.matchingEngineService.matchClinicians(intake);
+  }
+
+  @Post('match/explain')
+  async explainMatch(@Body() intake: MatchIntakeDto, @Res() res: Response) {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader('Transfer-Encoding', 'chunked');
+
+    const stream = await this.matchingEngineService.topMatch(intake);
+
+    for await (const chunk of stream) {
+      res.write(chunk);
+    }
+
+    res.end();
   }
 
   @Get('clinicians')
