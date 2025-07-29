@@ -4,7 +4,7 @@
 
 ## Documentation
 
-Frontend: Next.js, Tailwind CSS, Shadcn UI, React, TypeScript
+Frontend: Next.js, Tailwind CSS, Shadcn UI, React, TypeScript, Framer Motion, react-hook-form
 
 Backend: Nest.js, Prisma, Turso
 
