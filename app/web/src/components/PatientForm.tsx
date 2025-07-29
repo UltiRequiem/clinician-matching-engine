@@ -38,7 +38,7 @@ const formSchema = z.object({
   urgency_level: z.string().min(1, "Urgency level is required"),
 });
 
-export default function FormComponent() {
+export default function PatientForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {

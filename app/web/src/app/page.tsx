@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import FormComponent from "@/components/FormComponent";
+import PatientForm from "@/components/PatientForm";
 
 export default function Home() {
   return (
@@ -29,7 +29,7 @@ export default function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <FormComponent />
+            <PatientForm />
           </CardContent>
         </Card>
       </main>
