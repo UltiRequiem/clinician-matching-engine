@@ -22,7 +22,7 @@
     "react-hook-form": "^7.61.1",
     "tailwind-merge": "^3.3.1",
     "zod": "^3.25.76",
-    "@lunajoy/engine": "workspace:*"
+    "@lunajoy/engine": "file:../../packages/engine"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
