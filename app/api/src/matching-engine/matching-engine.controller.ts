@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MatchingEngineService } from './matching-engine.service';
 import { CreateMatchingEngineDto } from './dto/create-matching-engine.dto';
 import { UpdateMatchingEngineDto } from './dto/update-matching-engine.dto';
@@ -23,7 +31,10 @@ export class MatchingEngineController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMatchingEngineDto: UpdateMatchingEngineDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMatchingEngineDto: UpdateMatchingEngineDto,
+  ) {
     return this.matchingEngineService.update(+id, updateMatchingEngineDto);
   }
 
