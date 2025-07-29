@@ -40,7 +40,8 @@ export default function IntakeForm() {
             : data.gender_preference,
         insuranceProvider: data.insurance_provider,
         appointmentType: data.appointment_type.toLowerCase(),
-        clinicalNeeds: data.clinical_needs ?? [],
+        clinicalNeeds:
+          data.clinical_needs[0] === "none" ? [] : data.clinical_needs,
         preferredTimeSlots: data.preferred_time_slots,
         urgencyLevel: (data.urgency_level === "Inmediate (within 3 days)"
           ? "immediate"
@@ -62,6 +63,8 @@ export default function IntakeForm() {
 
   useEffect(() => {
     if (isMedicationManagement) {
+      form.setValue("clinical_needs", ["none"]);
+    } else {
       form.setValue("clinical_needs", []);
     }
   }, [isMedicationManagement]);
