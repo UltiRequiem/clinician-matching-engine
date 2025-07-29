@@ -65,7 +65,10 @@ export const INSURANCE_PROVIDERS = [
   "Medicare",
 ];
 
-export const APPOINTMENT_TYPES = ["Therapy", "Medication Management"];
+export const APPOINTMENT_TYPES = [
+  { id: "therapy", label: "Therapy" },
+  { id: "medication", label: "Medication Management" },
+];
 
 export const URGENCY_LEVELS = ["Inmediate (within 3 days)", "Flexible"];
 
