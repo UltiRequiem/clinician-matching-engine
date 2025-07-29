@@ -97,24 +97,17 @@ export default function ResultsPage() {
 									<h2 className="text-xl font-semibold text-[#43635f] mb-1">
 										{clinician.fullName}
 									</h2>
-									<div className="text-sm text-gray-500 mb-2">
-										Score: {Math.round(clinician.score)}%
-									</div>
-									<div className="mb-2">
-										{clinician.isAvailableNow ? (
-											<span className="text-green-600 font-semibold">
-												Available Now
-											</span>
-										) : (
-											<span className="text-gray-500">
-												Not currently available
-											</span>
-										)}
-									</div>
-									<div className="mb-2">
-										<span className="font-semibold">Match Count:</span>{" "}
-										{clinician.matchCount}
-									</div>
+				  <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+					<span>
+					  Score: {Math.round(clinician.score)}%
+					</span>
+					{clinician.isAvailableNow && (
+					  <span className="ml-2 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-semibold border border-green-200 shadow-sm align-middle">
+						Available Now
+					  </span>
+					)}
+				  </div>
+
 									{clinician.overlapping.length > 0 && (
 										<div className="mb-2">
 											<span className="font-semibold">Matching Criteria:</span>
