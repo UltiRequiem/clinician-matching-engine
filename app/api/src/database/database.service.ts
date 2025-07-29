@@ -1,10 +1,66 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Prisma, Gender } from '@prisma/client';
 
 @Injectable()
 export class DatabaseService {
   constructor(private readonly prisma: PrismaService) {}
+
+  /**
+   * Returns all clinicians with all relations for matching
+   */
+  /**
+   * Build a Prisma filter for clinicians based on patient intake
+   */
+  buildClinicianFilter(intake: {
+    state: string;
+    language: string;
+    genderPreference?: string;
+    insuranceProvider: string;
+    appointmentType: string;
+    clinicalNeeds: string[];
+    preferredTimeSlots?: string[];
+    urgencyLevel: string;
+  }): Prisma.ClinicianWhereInput {
+    return {
+      statesLicensed: { some: { state: intake.state } },
+      languagesSpoken: { some: { language: intake.language } },
+      ...(intake.genderPreference
+        ? { gender: intake.genderPreference as Gender }
+        : {}),
+      appointmentTypes: {
+        some: { type: intake.appointmentType as any },
+      },
+      insurancesAccepted: { some: { insurance: intake.insuranceProvider } },
+      ...(intake.clinicalNeeds && intake.clinicalNeeds.length > 0
+        ? {
+            clinicalSpecialties: {
+              some: { need: { in: intake.clinicalNeeds as any[] } },
+            },
+          }
+        : {}),
+      ...(intake.preferredTimeSlots && intake.preferredTimeSlots.length > 0
+        ? {
+            availableTimeSlots: {
+              some: { slot: { in: intake.preferredTimeSlots as any } },
+            },
+          }
+        : {}),
+    };
+  }
+  async getCliniciansWithRelations(filter: Prisma.ClinicianWhereInput = {}) {
+    return await this.prisma.clinician.findMany({
+      where: filter,
+      include: {
+        insurancesAccepted: true,
+        clinicalSpecialties: true,
+        languagesSpoken: true,
+        statesLicensed: true,
+        appointmentTypes: true,
+        availableTimeSlots: true,
+      },
+    });
+  }
 
   async createPatient(data: Prisma.PatientCreateInput) {
     return await this.prisma.patient.create({ data });

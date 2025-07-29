@@ -1,26 +1,111 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMatchingEngineDto } from './dto/create-matching-engine.dto';
-import { UpdateMatchingEngineDto } from './dto/update-matching-engine.dto';
+import { Injectable, Logger } from '@nestjs/common';
+import { DatabaseService } from 'src/database/database.service';
+import { MatchIntakeDto } from './dto/match-intake.dto';
+import { ClinicianWithRelations } from './entities/matching-engine.contract';
 
 @Injectable()
 export class MatchingEngineService {
-  create(createMatchingEngineDto: CreateMatchingEngineDto) {
-    return 'This action adds a new matchingEngine';
+  // private readonly logger = new Logger(MatchingEngineService.name);
+
+  constructor(private readonly databaseService: DatabaseService) {}
+
+  public async matchClinicians(intake: MatchIntakeDto) {
+    const clinicians = await this.databaseService.getCliniciansWithRelations(
+      this.databaseService.buildClinicianFilter(intake),
+    );
+    return this.rankAndScoreClinicians(clinicians, intake);
   }
 
-  findAll() {
-    return `This action returns all matchingEngine`;
+  public async getAllClinicians() {
+    return await this.databaseService.listClinicians();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} matchingEngine`;
+  private rankAndScoreClinicians(
+    clinicians: ClinicianWithRelations[],
+    intake: MatchIntakeDto,
+  ) {
+    const scored = clinicians.map((clinician) =>
+      this.scoreClinician(clinician, intake),
+    );
+    scored.sort((a, b) => b.score - a.score || a.matchCount - b.matchCount);
+    return scored;
   }
 
-  update(id: number, updateMatchingEngineDto: UpdateMatchingEngineDto) {
-    return `This action updates a #${id} matchingEngine`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} matchingEngine`;
+  private scoreClinician(
+    clinician: ClinicianWithRelations,
+    intake: MatchIntakeDto,
+  ) {
+    let score = 0;
+    const overlapping: string[] = [];
+    if (clinician.isAvailableNow) {
+      score += 30;
+      overlapping.push('available_now');
+    }
+    if (
+      clinician.insurancesAccepted &&
+      clinician.insurancesAccepted.some(
+        (i) => i.insurance === intake.insuranceProvider,
+      )
+    ) {
+      score += 25;
+      overlapping.push('accepts_insurance');
+    }
+    score += 10 * (1 / (clinician.matchCount + 1));
+    if (
+      intake.clinicalNeeds &&
+      clinician.clinicalSpecialties &&
+      clinician.clinicalSpecialties.some((s) =>
+        intake.clinicalNeeds.includes(s.need),
+      )
+    ) {
+      score += 15;
+      overlapping.push('specialty_match');
+    }
+    if (
+      clinician.languagesSpoken &&
+      clinician.languagesSpoken.some((l) => l.language === intake.language)
+    ) {
+      score += 10;
+      overlapping.push('language');
+    }
+    if (
+      clinician.statesLicensed &&
+      clinician.statesLicensed.some((s) => s.state === intake.state)
+    ) {
+      score += 10;
+      overlapping.push('state');
+    }
+    if (
+      intake.genderPreference &&
+      clinician.gender === intake.genderPreference
+    ) {
+      score += 5;
+      overlapping.push('gender');
+    }
+    if (
+      clinician.appointmentTypes &&
+      clinician.appointmentTypes.some((a) => a.type === intake.appointmentType)
+    ) {
+      score += 5;
+      overlapping.push('appointment_type');
+    }
+    if (
+      intake.preferredTimeSlots &&
+      clinician.availableTimeSlots &&
+      clinician.availableTimeSlots.some((t) =>
+        intake.preferredTimeSlots?.includes(t.slot),
+      )
+    ) {
+      score += 5;
+      overlapping.push('time_slot');
+    }
+    return {
+      id: clinician.id,
+      fullName: clinician.fullName,
+      score,
+      isAvailableNow: clinician.isAvailableNow,
+      overlapping,
+      matchCount: clinician.matchCount,
+    };
   }
 }
