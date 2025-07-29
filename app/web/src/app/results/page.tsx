@@ -127,7 +127,7 @@ export default function ResultsPage() {
 
   if (noMore || !results.length) {
     return (
-      <div className="bg-[#fffced] min-h-screen flex items-center justify-center p-4">
+      <div className="bg-[#fffced] min-h-screen flex items-center justify-center p-4 pb-20">
         <Card className="mx-auto max-w-2xl shadow-lg rounded-lg p-8">
           <CardHeader>
             <CardTitle className="text-3xl text-[#43635f] text-center mb-2">
@@ -241,7 +241,7 @@ export default function ResultsPage() {
   const isTopMatch = current === 0;
 
   return (
-    <div className="bg-[#fffced] min-h-screen flex flex-col items-center justify-center py-10">
+    <div className="bg-[#fffced] min-h-screen flex flex-col items-center justify-center py-10 pb-20 px-4">
       <Card className="mx-auto max-w-lg w-full shadow-lg rounded-lg">
         <CardHeader>
           <CardTitle className="text-3xl text-[#43635f] text-center mb-2 font-serif">
@@ -256,9 +256,7 @@ export default function ResultsPage() {
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={clinician.id}
-                className={`bg-white rounded-lg shadow p-6 flex flex-col justify-between border border-[#f3e9d2] w-full max-w-md ${
-                  isTopMatch ? "min-h-[500px] max-h-[600px]" : "min-h-[300px]"
-                }`}
+                className="bg-white rounded-lg shadow p-6 flex flex-col justify-between border border-[#f3e9d2] w-full max-w-md min-h-[500px] max-h-[600px]"
                 initial={{
                   x:
                     direction === "left"
