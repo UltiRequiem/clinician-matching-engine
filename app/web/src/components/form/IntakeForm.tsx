@@ -31,7 +31,6 @@ export default function IntakeForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      // Convert form data to MatchIntakeDto format
       const matchIntake: MatchIntakeDto = {
         state: data.state,
         language: data.language,
@@ -48,17 +47,10 @@ export default function IntakeForm() {
           : "flexible") as UrgencyLevel,
       };
 
-      console.log(matchIntake);
-      console.log(JSON.stringify(matchIntake));
-
-      // Call the matching engine
       const results = await matchClinicians(matchIntake);
 
-      // Store results in sessionStorage for the results page
       sessionStorage.setItem("matchResults", JSON.stringify(results));
       sessionStorage.setItem("matchIntake", JSON.stringify(matchIntake));
-
-      // Navigate to results page
       router.push("/results");
     } catch (error) {
       console.error("Error matching clinicians:", error);
