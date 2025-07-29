@@ -29,16 +29,16 @@ import {
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-export default function FormComponent() {
-  const formSchema = z.object({
-    state: z.string().min(1, "State is required"),
-    language: z.string().min(1, "Language is required"),
-    gender_preference: z.string().optional(),
-    insurance_provider: z.string().min(1, "Insurance provider is required"),
-    appointment_type: z.string().min(1, "Appointment type is required"),
-    urgency_level: z.string().min(1, "Urgency level is required"),
-  });
+const formSchema = z.object({
+  state: z.string().min(1, "State is required"),
+  language: z.string().min(1, "Language is required"),
+  gender_preference: z.string().optional(),
+  insurance_provider: z.string().min(1, "Insurance provider is required"),
+  appointment_type: z.string().min(1, "Appointment type is required"),
+  urgency_level: z.string().min(1, "Urgency level is required"),
+});
 
+export default function FormComponent() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
