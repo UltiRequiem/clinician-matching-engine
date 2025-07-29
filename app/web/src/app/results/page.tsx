@@ -43,16 +43,15 @@ export default function ResultsPage() {
       setDirection(dir);
       setTimeout(() => {
         if (dir === "right") {
-          // Save selected doctor and redirect
           sessionStorage.setItem(
             "chosenDoctor",
             JSON.stringify(results[current])
           );
           router.push("/chosen");
         } else {
-          // Next doctor
           if (current + 1 < results.length) {
             setCurrent((c) => c + 1);
+
             setDirection(null);
           } else {
             setNoMore(true);
