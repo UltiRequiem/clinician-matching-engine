@@ -71,7 +71,6 @@ export default function ResultsPage() {
           }
 
           displayedText += char;
-
           setDisplayedExplanation(displayedText);
         }
       }
@@ -186,6 +185,7 @@ export default function ResultsPage() {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: direction === "left" ? -500 : 500, opacity: 0 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                layout
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.8}
