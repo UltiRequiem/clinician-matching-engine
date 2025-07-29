@@ -21,7 +21,9 @@ export async function matchClinicians(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(intake),
   });
+
   if (!res.ok) throw new Error("Failed to match clinicians");
+
   return res.json();
 }
 
@@ -35,6 +37,7 @@ export async function explainMatch(
   });
 
   const reader = res.body?.getReader();
+
   if (!reader) throw new Error("Failed to read response stream");
 
   return reader;
@@ -44,7 +47,9 @@ export async function getAllClinicians(): Promise<ClinicianWithRelations[]> {
   const res = await fetch(`${API_BASE}/matching-engine/clinicians`, {
     method: "GET",
   });
+
   if (!res.ok) throw new Error("Failed to fetch clinicians");
+
   return res.json();
 }
 
