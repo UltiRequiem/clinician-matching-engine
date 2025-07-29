@@ -26,7 +26,12 @@ export class MatchingEngineService {
     );
 
     const topScored = this.rankAndScoreClinicians(clinicians, intake);
-    const topMatch = topScored.shift()!;
+    const topMatch = topScored.shift();
+
+    if (!topMatch) {
+      throw new Error('No clinician found');
+    }
+
     const explanation = this.generateTopMatchExplanation(
       intake,
       topMatch,
@@ -119,10 +124,12 @@ export class MatchingEngineService {
 
     if (
       intake.clinicalNeeds &&
+      intake.clinicalNeeds.length > 0 &&
       clinician.clinicalSpecialties &&
-      clinician.clinicalSpecialties.some((s) =>
-        intake.clinicalNeeds.includes(s.need),
-      )
+      clinician.clinicalSpecialties.some((s) => {
+        const needs = intake.clinicalNeeds;
+        return needs ? needs.includes(s.need) : false;
+      })
     ) {
       score += 15;
       overlapping.push('specialty_match');

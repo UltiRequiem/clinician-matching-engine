@@ -126,5 +126,31 @@ describe('MatchingEngineService', () => {
       expect(result.score).toBeGreaterThan(0);
       expect(result.overlapping.length).toBeGreaterThan(0);
     });
+
+    it('should handle medication appointments with empty clinical needs', () => {
+      const intake: MatchIntakeDto = {
+        insuranceProvider: 'Aetna',
+        clinicalNeeds: [],
+        language: 'en',
+        state: 'NY',
+        appointmentType: 'medication',
+      } as any;
+      const clinician: ClinicianWithRelations = {
+        id: 1,
+        fullName: 'A',
+        isAvailableNow: true,
+        insurancesAccepted: [{ insurance: 'Aetna' }],
+        matchCount: 0,
+        clinicalSpecialties: [{ need: 'anxiety' }],
+        languagesSpoken: [{ language: 'en' }],
+        statesLicensed: [{ state: 'NY' }],
+        appointmentTypes: [{ type: 'medication' }],
+      } as any;
+      const result = (service as any).scoreClinician(clinician, intake);
+      expect(result.score).toBeGreaterThan(0);
+      expect(result.overlapping).toContain('accepts_insurance');
+      expect(result.overlapping).toContain('appointment_type');
+      expect(result.overlapping).not.toContain('specialty_match');
+    });
   });
 });

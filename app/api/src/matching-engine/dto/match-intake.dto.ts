@@ -23,9 +23,10 @@ export class MatchIntakeDto {
   @IsString()
   appointmentType: AppointmentType;
 
+  @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  clinicalNeeds: ClinicalNeed[];
+  clinicalNeeds?: ClinicalNeed[];
 
   @IsOptional()
   @IsArray()

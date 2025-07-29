@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import {
   Prisma,
   Gender,
@@ -18,7 +18,7 @@ export class DatabaseService {
     genderPreference?: string;
     insuranceProvider: string;
     appointmentType: AppointmentType;
-    clinicalNeeds: ClinicalNeed[];
+    clinicalNeeds?: ClinicalNeed[];
     preferredTimeSlots?: TimeSlot[];
     urgencyLevel: string;
   }): Prisma.ClinicianWhereInput {
