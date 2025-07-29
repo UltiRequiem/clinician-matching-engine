@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Prisma, Gender } from '@prisma/client';
+import {
+  Prisma,
+  Gender,
+  AppointmentType,
+  ClinicalNeed,
+  TimeSlot,
+} from '@prisma/client';
 
 @Injectable()
 export class DatabaseService {
@@ -11,9 +17,9 @@ export class DatabaseService {
     language: string;
     genderPreference?: string;
     insuranceProvider: string;
-    appointmentType: string;
-    clinicalNeeds: string[];
-    preferredTimeSlots?: string[];
+    appointmentType: AppointmentType;
+    clinicalNeeds: ClinicalNeed[];
+    preferredTimeSlots?: TimeSlot[];
     urgencyLevel: string;
   }): Prisma.ClinicianWhereInput {
     return {
@@ -23,20 +29,20 @@ export class DatabaseService {
         ? { gender: intake.genderPreference as Gender }
         : {}),
       appointmentTypes: {
-        some: { type: intake.appointmentType as any },
+        some: { type: intake.appointmentType },
       },
       insurancesAccepted: { some: { insurance: intake.insuranceProvider } },
       ...(intake.clinicalNeeds && intake.clinicalNeeds.length > 0
         ? {
             clinicalSpecialties: {
-              some: { need: { in: intake.clinicalNeeds as any[] } },
+              some: { need: { in: intake.clinicalNeeds } },
             },
           }
         : {}),
       ...(intake.preferredTimeSlots && intake.preferredTimeSlots.length > 0
         ? {
             availableTimeSlots: {
-              some: { slot: { in: intake.preferredTimeSlots as any } },
+              some: { slot: { in: intake.preferredTimeSlots } },
             },
           }
         : {}),

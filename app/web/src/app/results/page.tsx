@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -10,18 +10,25 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import { overlapLabels, type ClinicianMatchScore, type MatchIntakeDto } from "@lunajoy/engine";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+	overlapLabels,
+	type ClinicianMatchScore,
+	type MatchIntakeDto,
+} from "@lunajoy/engine";
 
 export default function ResultsPage() {
 	const router = useRouter();
 	const [results, setResults] = useState<ClinicianMatchScore[]>([]);
 	const [_intake, setIntake] = useState<MatchIntakeDto | null>(null);
 	const [loading, setLoading] = useState(true);
+	const [current, setCurrent] = useState(0);
+	const [direction, setDirection] = useState<"left" | "right" | null>(null);
+	const [noMore, setNoMore] = useState(false);
 
 	useEffect(() => {
 		const storedResults = sessionStorage.getItem("matchResults");
 		const storedIntake = sessionStorage.getItem("matchIntake");
-
 		if (storedResults && storedIntake) {
 			setResults(JSON.parse(storedResults));
 			setIntake(JSON.parse(storedIntake));
@@ -30,6 +37,31 @@ export default function ResultsPage() {
 		}
 		setLoading(false);
 	}, [router]);
+
+	const handleSwipe = useCallback(
+		(dir: "left" | "right") => {
+			setDirection(dir);
+			setTimeout(() => {
+				if (dir === "right") {
+					// Save selected doctor and redirect
+					sessionStorage.setItem(
+						"chosenDoctor",
+						JSON.stringify(results[current]),
+					);
+					router.push("/chosen");
+				} else {
+					// Next doctor
+					if (current + 1 < results.length) {
+						setCurrent((c) => c + 1);
+						setDirection(null);
+					} else {
+						setNoMore(true);
+					}
+				}
+			}, 300);
+		},
+		[current, results, router],
+	);
 
 	if (loading) {
 		return (
@@ -43,17 +75,16 @@ export default function ResultsPage() {
 		);
 	}
 
-	if (!results.length) {
+	if (noMore || !results.length) {
 		return (
 			<div className="bg-[#fffced] min-h-screen flex items-center justify-center">
 				<Card className="mx-auto max-w-2xl shadow-lg rounded-lg p-8">
 					<CardHeader>
 						<CardTitle className="text-3xl text-[#43635f] text-center mb-2">
-							No matches found
+							No more options
 						</CardTitle>
 						<CardDescription className="text-center text-[#43635f] mb-6">
-							We couldn&apos;t find any clinicians that match your criteria.
-							Please try adjusting your preferences.
+							Start your search again to see more clinicians.
 						</CardDescription>
 					</CardHeader>
 					<CardContent className="flex flex-col items-center">
@@ -69,71 +100,88 @@ export default function ResultsPage() {
 		);
 	}
 
+	const clinician = results[current];
+
 	return (
 		<div className="bg-[#fffced] min-h-screen flex flex-col items-center justify-center py-10">
-			<Card className="mx-auto max-w-3xl w-full shadow-lg rounded-lg">
+			<Card className="mx-auto max-w-lg w-full shadow-lg rounded-lg">
 				<CardHeader>
 					<CardTitle className="text-3xl text-[#43635f] text-center mb-2">
 						Your Matches
 					</CardTitle>
 					<CardDescription className="text-center text-[#43635f] mb-4">
-						Here are the clinicians that best match your preferences. You can
-						start a new search at any time.
+						Swipe right to select your preferred clinician, or left to skip.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<div className="grid gap-6 md:grid-cols-2">
-						{results.map((clinician, index) => (
-							<div
+					<div className="flex flex-col items-center min-h-[400px]">
+						<AnimatePresence initial={false} custom={direction}>
+							<motion.div
 								key={clinician.id}
-								className="bg-white rounded-lg shadow p-4 flex flex-col justify-between border border-[#f3e9d2] relative"
+								className="bg-white rounded-lg shadow p-6 flex flex-col justify-between border border-[#f3e9d2] relative w-full max-w-md"
+								initial={{
+									x:
+										direction === "left"
+											? 300
+											: direction === "right"
+												? -300
+												: 0,
+									opacity: 0,
+								}}
+								animate={{ x: 0, opacity: 1 }}
+								exit={{ x: direction === "left" ? -500 : 500, opacity: 0 }}
+								transition={{ type: "spring", stiffness: 300, damping: 30 }}
+								drag="x"
+								dragConstraints={{ left: 0, right: 0 }}
+								dragElastic={0.8}
+								onDragEnd={(
+									_e: MouseEvent | TouchEvent | PointerEvent,
+									info: { offset: { x: number } },
+								) => {
+									if (info.offset.x > 120) handleSwipe("right");
+									else if (info.offset.x < -120) handleSwipe("left");
+								}}
 							>
-								{index === 0 && (
-									<div className="absolute -top-2 -right-2 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold shadow">
-										Best Match
-									</div>
-								)}
-								<div>
-									<h2 className="text-xl font-semibold text-[#43635f] mb-1">
-										{clinician.fullName}
-									</h2>
-				  <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-					<span>
-					  Score: {Math.round(clinician.score)}%
-					</span>
-					{clinician.isAvailableNow && (
-					  <span className="ml-2 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-semibold border border-green-200 shadow-sm align-middle">
-						Available Now
-					  </span>
-					)}
-				  </div>
-
-									{clinician.overlapping.length > 0 && (
-										<div className="mb-2">
-											<span className="font-semibold">Matching Criteria:</span>
-											<div className="flex flex-wrap gap-1 mt-1">
-												{overlapLabels(clinician.overlapping).map((criteria) => (
-													<span
-														key={criteria}
-														className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
-													>
-														{criteria}
-													</span>
-												))}
-											</div>
-										</div>
+								<h2 className="text-xl font-semibold text-[#43635f] mb-1 text-center">
+									{clinician.fullName}
+								</h2>
+								<div className="flex items-center gap-2 text-sm text-gray-500 mb-2 justify-center">
+									<span>Score: {Math.round(clinician.score)}%</span>
+									{clinician.isAvailableNow && (
+										<span className="ml-2 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-semibold border border-green-200 shadow-sm align-middle">
+											Available Now
+										</span>
 									)}
 								</div>
-							</div>
-						))}
-					</div>
-					<div className="mt-8 flex flex-col items-center">
-						<Button
-							onClick={() => router.push("/")}
-							className="w-full max-w-xs"
-						>
-							Start New Search
-						</Button>
+								{clinician.overlapping.length > 0 && (
+									<div className="mb-2 text-center">
+										<span className="font-semibold">Matching Criteria:</span>
+										<div className="flex flex-wrap gap-1 mt-1 justify-center">
+											{overlapLabels(clinician.overlapping).map((criteria) => (
+												<span
+													key={criteria}
+													className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
+												>
+													{criteria}
+												</span>
+											))}
+										</div>
+									</div>
+								)}
+								<div className="flex justify-between mt-8">
+									<Button
+										variant="outline"
+										className="w-32"
+										onClick={() => handleSwipe("left")}
+									>
+										Skip
+									</Button>
+									<Button className="w-32" onClick={() => handleSwipe("right")}>
+										Select
+									</Button>
+								</div>
+							</motion.div>
+						</AnimatePresence>
 					</div>
 				</CardContent>
 			</Card>

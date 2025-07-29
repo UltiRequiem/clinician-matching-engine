@@ -1,3 +1,4 @@
+import { AppointmentType, ClinicalNeed, TimeSlot } from '@prisma/client';
 import { IsString, IsOptional, IsArray, IsEnum } from 'class-validator';
 
 export enum UrgencyLevel {
@@ -20,16 +21,16 @@ export class MatchIntakeDto {
   insuranceProvider: string;
 
   @IsString()
-  appointmentType: string;
+  appointmentType: AppointmentType;
 
   @IsArray()
   @IsString({ each: true })
-  clinicalNeeds: string[];
+  clinicalNeeds: ClinicalNeed[];
 
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  preferredTimeSlots?: string[];
+  preferredTimeSlots?: TimeSlot[];
 
   @IsEnum(UrgencyLevel)
   urgencyLevel: UrgencyLevel;
