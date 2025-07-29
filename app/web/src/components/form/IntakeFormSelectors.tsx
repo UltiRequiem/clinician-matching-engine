@@ -87,7 +87,7 @@ export function IntakeFormSelectors({
                     field.onChange(value);
                     if (item.field_name === "appointment_type") {
                       const isMedicationManagement =
-                        value === "Medication Management";
+                        value === value;
                       setIsMedicationManagement?.(isMedicationManagement);
                     }
                   }}
@@ -99,7 +99,7 @@ export function IntakeFormSelectors({
                   <SelectContent>
                     {item.data.map((data_item) => {
                       if (typeof data_item === "string") {
-                        
+
                         return (
                           <SelectItem value={data_item} key={data_item}>
                             {data_item}

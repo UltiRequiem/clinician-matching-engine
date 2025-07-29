@@ -22,7 +22,7 @@ export default function IntakeForm() {
       language: "English",
       gender_preference: "No preference",
       insurance_provider: "",
-      appointment_type: "Therapy",
+      appointment_type: "therapy",
       clinical_needs: [],
       preferred_time_slots: [],
       urgency_level: "Flexible",
