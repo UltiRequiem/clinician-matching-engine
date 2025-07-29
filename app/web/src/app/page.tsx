@@ -47,7 +47,7 @@ export default function Home() {
           </Button>
         </div>
       </header>
-      <main>
+      <main className="px-4 sm:px-6 lg:px-8">
         <Card className="mx-auto my-10 max-w-xl md:max-w-2xl w-full px-4 py-6 shadow-lg rounded-lg">
           <CardHeader>
             <CardTitle className="text-3xl text-[#43635f] font-serif text-center">
