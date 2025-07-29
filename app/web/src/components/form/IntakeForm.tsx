@@ -20,7 +20,7 @@ export default function IntakeForm() {
     defaultValues: {
       state: "",
       language: "English",
-      gender_preference: "No preference",
+      gender_preference: "no_preference",
       insurance_provider: "",
       appointment_type: "therapy",
       clinical_needs: [],

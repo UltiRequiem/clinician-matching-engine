@@ -40,7 +40,7 @@ const items = [
   },
   {
     field_name: "gender_preference",
-    label: "Gender preference (Optional)",
+    label: "Gender preference",
     placeholder: null,
     data: GENDER_PREFERENCES,
   },
