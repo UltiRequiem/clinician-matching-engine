@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   overlapLabels,
+  explainMatch,
   type ClinicianMatchScore,
   type MatchIntakeDto,
 } from "@lunajoy/engine";
@@ -20,11 +21,14 @@ import {
 export default function ResultsPage() {
   const router = useRouter();
   const [results, setResults] = useState<ClinicianMatchScore[]>([]);
-  const [_intake, setIntake] = useState<MatchIntakeDto | null>(null);
+  const [intake, setIntake] = useState<MatchIntakeDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
   const [noMore, setNoMore] = useState(false);
+  const [explanation, setExplanation] = useState("");
+  const [displayedExplanation, setDisplayedExplanation] = useState("");
+  const [isExplaining, setIsExplaining] = useState(false);
 
   useEffect(() => {
     const storedResults = sessionStorage.getItem("matchResults");
@@ -38,20 +42,69 @@ export default function ResultsPage() {
     setLoading(false);
   }, [router]);
 
+  const fetchExplanation = useCallback(async () => {
+    if (!intake) return;
+
+    setIsExplaining(true);
+    setExplanation("");
+    setDisplayedExplanation("");
+
+    try {
+      const reader = await explainMatch(intake);
+      const decoder = new TextDecoder();
+      let accumulatedText = "";
+      let displayedText = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        accumulatedText += chunk;
+        setExplanation(accumulatedText);
+
+        const newChars = chunk.split("");
+
+        for (const char of newChars) {
+          if (char === "*") {
+            continue;
+          }
+
+          displayedText += char;
+
+          setDisplayedExplanation(displayedText);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to fetch explanation:", error);
+      setExplanation("Unable to load explanation at this time.");
+      setDisplayedExplanation("Unable to load explanation at this time.");
+    } finally {
+      setIsExplaining(false);
+    }
+  }, [intake]);
+
+  useEffect(() => {
+    if (intake && results.length > 0 && current === 0) {
+      fetchExplanation();
+    }
+  }, [intake, results, current, fetchExplanation]);
+
   const handleSwipe = useCallback(
     (dir: "left" | "right") => {
       setDirection(dir);
       setTimeout(() => {
         if (dir === "right") {
+          // Save selected doctor and redirect
           sessionStorage.setItem(
             "chosenDoctor",
             JSON.stringify(results[current])
           );
           router.push("/chosen");
         } else {
+          // Next doctor
           if (current + 1 < results.length) {
             setCurrent((c) => c + 1);
-
             setDirection(null);
           } else {
             setNoMore(true);
@@ -100,6 +153,7 @@ export default function ResultsPage() {
   }
 
   const clinician = results[current];
+  const isTopMatch = current === 0;
 
   return (
     <div className="bg-[#fffced] min-h-screen flex flex-col items-center justify-center py-10">
@@ -113,11 +167,13 @@ export default function ResultsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col items-center min-h-[300px] relative">
+          <div className="flex flex-col items-center relative">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={clinician.id}
-                className="bg-white rounded-lg shadow p-6 flex flex-col justify-between border border-[#f3e9d2] w-full max-w-md absolute"
+                className={`bg-white rounded-lg shadow p-6 flex flex-col justify-between border border-[#f3e9d2] w-full max-w-md ${
+                  isTopMatch ? "min-h-[500px] max-h-[600px]" : "min-h-[300px]"
+                }`}
                 initial={{
                   x:
                     direction === "left"
@@ -141,6 +197,14 @@ export default function ResultsPage() {
                   else if (info.offset.x < -120) handleSwipe("left");
                 }}
               >
+                {isTopMatch && (
+                  <div className="mb-4 text-center">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-sm">
+                      ⭐ Top Match
+                    </span>
+                  </div>
+                )}
+
                 <h2 className="text-xl font-semibold text-[#43635f] mb-1 text-center">
                   {clinician.fullName}
                 </h2>
@@ -167,6 +231,50 @@ export default function ResultsPage() {
                     </div>
                   </div>
                 )}
+
+                {isTopMatch && (
+                  <div className="mt-4 p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-100 flex-1 overflow-hidden">
+                    <div className="mb-2">
+                      <h3 className="text-sm font-semibold text-[#43635f]">
+                        Why this is your best match:
+                      </h3>
+                    </div>
+
+                    <div className="flex-1 overflow-hidden">
+                      {isExplaining ? (
+                        <div className="flex items-center space-x-2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600" />
+                          <span className="text-blue-600">
+                            Generating explanation...
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="h-32 overflow-y-auto pr-2">
+                          {displayedExplanation ? (
+                            <div className="space-y-2">
+                              {displayedExplanation
+                                .split("\n")
+                                .filter((paragraph) => paragraph.trim())
+                                .map((paragraph, index) => (
+                                  <p
+                                    key={`explanation-${index}-${paragraph.substring(0, 10)}`}
+                                    className="text-sm leading-relaxed text-[#43635f]"
+                                  >
+                                    {paragraph}
+                                  </p>
+                                ))}
+                            </div>
+                          ) : (
+                            <p className="text-sm text-gray-500">
+                              No explanation available.
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex justify-between mt-8">
                   <Button
                     variant="outline"
