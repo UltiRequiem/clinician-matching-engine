@@ -48,10 +48,10 @@ export const LANGUAGES = [
 ];
 
 export const GENDER_PREFERENCES = [
-  "No preference",
-  "Female",
-  "Male",
-  "Non-binary",
+  { id: "no_preference", label: "No preference" },
+  { id: "female", label: "Female" },
+  { id: "male", label: "Male" },
+  { id: "non_binary", label: "Non-binary" },
 ];
 
 export const INSURANCE_PROVIDERS = [

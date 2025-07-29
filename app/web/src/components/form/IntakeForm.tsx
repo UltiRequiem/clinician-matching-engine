@@ -35,7 +35,7 @@ export default function IntakeForm() {
         state: data.state,
         language: data.language,
         genderPreference:
-          data.gender_preference === "No preference"
+          data.gender_preference === "no_preference"
             ? undefined
             : data.gender_preference,
         insuranceProvider: data.insurance_provider,

@@ -11,12 +11,14 @@ import {
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Stethoscope } from "lucide-react";
 import {
   overlapLabels,
   explainMatch,
   type ClinicianMatchScore,
   type MatchIntakeDto,
 } from "@lunajoy/engine";
+import { getRandomColor } from "./color";
 
 export default function ResultsPage() {
   const router = useRouter();
@@ -43,8 +45,12 @@ export default function ResultsPage() {
   }, [router]);
 
   const fetchExplanation = useCallback(async () => {
-    if (!intake) return;
+    if (!intake) {
+      console.log("No intake data available");
+      return;
+    }
 
+    console.log("Starting explanation fetch...");
     setIsExplaining(true);
     setExplanation("");
     setDisplayedExplanation("");
@@ -53,7 +59,17 @@ export default function ResultsPage() {
       const reader = await explainMatch(intake);
       const decoder = new TextDecoder();
       let accumulatedText = "";
-      let displayedText = "";
+
+      const timeout = setTimeout(() => {
+        console.log("Explanation fetch timed out");
+        setExplanation(
+          "Explanation is taking longer than expected. This doctor matches your preferences based on location, availability, and specializations."
+        );
+        setDisplayedExplanation(
+          "Explanation is taking longer than expected. This doctor matches your preferences based on location, availability, and specializations."
+        );
+        setIsExplaining(false);
+      }, 10000);
 
       while (true) {
         const { done, value } = await reader.read();
@@ -62,18 +78,13 @@ export default function ResultsPage() {
         const chunk = decoder.decode(value, { stream: true });
         accumulatedText += chunk;
         setExplanation(accumulatedText);
+        console.log("Received chunk:", chunk);
 
-        const newChars = chunk.split("");
-
-        for (const char of newChars) {
-          if (char === "*") {
-            continue;
-          }
-
-          displayedText += char;
-          setDisplayedExplanation(displayedText);
-        }
+        // Display text exactly as it comes from the server
+        setDisplayedExplanation(accumulatedText);
       }
+
+      clearTimeout(timeout);
     } catch (error) {
       console.error("Failed to fetch explanation:", error);
       setExplanation("Unable to load explanation at this time.");
@@ -85,6 +96,7 @@ export default function ResultsPage() {
 
   useEffect(() => {
     if (intake && results.length > 0 && current === 0) {
+      console.log("Fetching explanation for:", intake);
       fetchExplanation();
     }
   }, [intake, results, current, fetchExplanation]);
@@ -256,7 +268,7 @@ export default function ResultsPage() {
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={clinician.id}
-                className="bg-white rounded-lg shadow p-6 flex flex-col justify-between border border-[#f3e9d2] w-full max-w-md min-h-[500px] max-h-[600px]"
+                className="bg-white rounded-xl shadow-xl p-6 flex flex-col border border-[#f3e9d2] w-full max-w-md min-h-[600px] max-h-[700px] backdrop-blur-sm overflow-hidden"
                 initial={{
                   x:
                     direction === "left"
@@ -282,32 +294,55 @@ export default function ResultsPage() {
                 }}
               >
                 {isTopMatch && (
-                  <div className="mb-4 text-center">
+                  <div className="mb-3 text-center">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-sm">
                       ⭐ Top Match
                     </span>
                   </div>
                 )}
 
-                <h2 className="text-xl font-semibold text-[#43635f] mb-1 text-center">
-                  {clinician.fullName}
-                </h2>
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2 justify-center">
-                  <span>Score: {Math.round(clinician.score)}%</span>
+                <div className="text-center mb-3">
+                  <div className="flex justify-center mb-3">
+                    <div
+                      className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg"
+                      style={{
+                        backgroundColor: getRandomColor(clinician.fullName),
+                      }}
+                    >
+                      {clinician.fullName
+                        .split(" ")
+                        .map((name) => name[0])
+                        .join("")
+                        .toUpperCase()}
+                    </div>
+                  </div>
+                  <h2 className="text-xl font-bold text-[#43635f] mb-2">
+                    {clinician.fullName}
+                  </h2>
+                </div>
+                <div className="flex items-center gap-3 text-sm mb-3 justify-center">
+                  <div className="flex items-center gap-1 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                    <span className="text-blue-700 font-semibold">Score:</span>
+                    <span className="text-blue-800 font-bold">
+                      {Math.round(clinician.score)}%
+                    </span>
+                  </div>
                   {clinician.isAvailableNow && (
-                    <span className="ml-2 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-semibold border border-green-200 shadow-sm align-middle">
+                    <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-semibold border border-green-200 shadow-sm">
                       Available Now
                     </span>
                   )}
                 </div>
                 {clinician.overlapping.length > 0 && (
-                  <div className="mb-2 text-center">
-                    <span className="font-semibold">Matching Criteria:</span>
-                    <div className="flex flex-wrap gap-1 mt-1 justify-center">
+                  <div className="mb-3 text-center">
+                    <span className="font-semibold text-[#43635f] mb-2 block">
+                      Matching Criteria:
+                    </span>
+                    <div className="flex flex-wrap gap-2 justify-center">
                       {overlapLabels(clinician.overlapping).map((criteria) => (
                         <span
                           key={criteria}
-                          className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
+                          className="bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-800 text-xs px-3 py-1.5 rounded-full border border-blue-200 font-medium"
                         >
                           {criteria}
                         </span>
@@ -317,14 +352,15 @@ export default function ResultsPage() {
                 )}
 
                 {isTopMatch && (
-                  <div className="mt-4 p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-100 flex-1 overflow-hidden">
-                    <div className="mb-2">
-                      <h3 className="text-sm font-semibold text-[#43635f]">
+                  <div className="mt-3 p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200 shadow-sm flex-shrink-0">
+                    <div className="mb-3">
+                      <h3 className="text-sm font-bold text-[#43635f] flex items-center gap-2">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
                         Why this is your best match:
                       </h3>
                     </div>
 
-                    <div className="flex-1 overflow-hidden">
+                    <div className="min-h-[120px]">
                       {isExplaining ? (
                         <div className="flex items-center space-x-2">
                           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600" />
@@ -333,25 +369,23 @@ export default function ResultsPage() {
                           </span>
                         </div>
                       ) : (
-                        <div className="h-32 overflow-y-auto pr-2">
+                        <div className="h-48 overflow-y-auto pr-2 border border-gray-200 rounded-lg p-3 bg-white">
                           {displayedExplanation ? (
                             <div className="space-y-2">
-                              {displayedExplanation
-                                .split("\n")
-                                .filter((paragraph) => paragraph.trim())
-                                .map((paragraph, index) => (
-                                  <p
-                                    key={`explanation-${index}-${paragraph.substring(0, 10)}`}
-                                    className="text-sm leading-relaxed text-[#43635f]"
-                                  >
-                                    {paragraph}
-                                  </p>
-                                ))}
+                              <p className="text-sm leading-relaxed text-[#43635f] whitespace-pre-wrap">
+                                {displayedExplanation}
+                              </p>
                             </div>
                           ) : (
-                            <p className="text-sm text-gray-500">
-                              No explanation available.
-                            </p>
+                            <div className="space-y-2">
+                              <p className="text-sm text-gray-500">
+                                Loading explanation...
+                              </p>
+                              <p className="text-xs text-gray-400">
+                                This doctor matches your preferences based on
+                                location, availability, and specializations.
+                              </p>
+                            </div>
                           )}
                         </div>
                       )}
@@ -359,7 +393,7 @@ export default function ResultsPage() {
                   </div>
                 )}
 
-                <div className="flex justify-between mt-8">
+                <div className="flex justify-between mt-auto pt-6">
                   <Button
                     variant="outline"
                     className="w-32 text-xl font-serif py-3"
