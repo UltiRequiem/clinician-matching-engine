@@ -30,8 +30,8 @@ export default function ChosenPage() {
   }
 
   return (
-    <div className="bg-[#fffced] min-h-screen flex items-center justify-center">
-      <Card className="mx-auto max-w-lg w-full shadow-lg rounded-lg p-8">
+    <div className="bg-[#fffced] min-h-screen flex items-center justify-center p-4">
+      <Card className="mx-auto max-w-lg w-full shadow-lg rounded-lg p-6 sm:p-8">
         <CardHeader>
           <CardTitle className="text-3xl text-[#43635f] text-center mb-2 font-serif">
             Your Doctor Has Been Chosen!

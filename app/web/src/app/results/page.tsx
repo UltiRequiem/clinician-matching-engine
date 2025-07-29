@@ -230,8 +230,8 @@ export default function ResultsPage() {
   const isTopMatch = current === 0;
 
   return (
-    <div className="bg-[#fffced] min-h-screen flex flex-col items-center justify-center py-10 pb-20 px-4">
-      <Card className="mx-auto max-w-lg w-full shadow-lg rounded-lg">
+    <div className="bg-[#fffced] min-h-screen flex flex-col items-center justify-center py-6 sm:py-10 pb-16 sm:pb-20 px-4">
+      <Card className="mx-auto max-w-lg w-full shadow-lg rounded-lg p-4 sm:p-6">
         <CardHeader>
           <CardTitle className="text-3xl text-[#43635f] text-center mb-2 font-serif">
             Your Matches
