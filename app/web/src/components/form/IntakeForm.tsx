@@ -62,7 +62,7 @@ export default function IntakeForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <IntakeFormSelectors
           form={form}
           setIsMedicationManagement={setIsMedicationManagement}
@@ -74,7 +74,7 @@ export default function IntakeForm() {
               <FormLabel className="text-base text-[#43635f] font-semibold font-serif">
                 Clinical Needs & Specialities
               </FormLabel>
-              <FormDescription className="text-[#43653f]">
+              <FormDescription className="text-[#43653f] mb-2">
                 Select all that apply to your situation.
               </FormDescription>
               <IntakeFormCheckboxes
