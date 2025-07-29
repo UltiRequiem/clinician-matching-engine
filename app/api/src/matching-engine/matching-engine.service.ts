@@ -99,20 +99,24 @@ export class MatchingEngineService {
   ) {
     let score = 0;
     const overlapping: string[] = [];
+
     if (clinician.isAvailableNow) {
-      score += 30;
+      score += 20;
       overlapping.push('available_now');
     }
+
     if (
       clinician.insurancesAccepted &&
       clinician.insurancesAccepted.some(
         (i) => i.insurance === intake.insuranceProvider,
       )
     ) {
-      score += 25;
+      score += 20;
       overlapping.push('accepts_insurance');
     }
+
     score += 10 * (1 / (clinician.matchCount + 1));
+
     if (
       intake.clinicalNeeds &&
       clinician.clinicalSpecialties &&
@@ -123,6 +127,7 @@ export class MatchingEngineService {
       score += 15;
       overlapping.push('specialty_match');
     }
+
     if (
       clinician.languagesSpoken &&
       clinician.languagesSpoken.some((l) => l.language === intake.language)
@@ -130,6 +135,7 @@ export class MatchingEngineService {
       score += 10;
       overlapping.push('language');
     }
+
     if (
       clinician.statesLicensed &&
       clinician.statesLicensed.some((s) => s.state === intake.state)
@@ -137,6 +143,7 @@ export class MatchingEngineService {
       score += 10;
       overlapping.push('state');
     }
+
     if (
       intake.genderPreference &&
       clinician.gender === intake.genderPreference
@@ -144,6 +151,7 @@ export class MatchingEngineService {
       score += 5;
       overlapping.push('gender');
     }
+
     if (
       clinician.appointmentTypes &&
       clinician.appointmentTypes.some((a) => a.type === intake.appointmentType)
@@ -151,6 +159,7 @@ export class MatchingEngineService {
       score += 5;
       overlapping.push('appointment_type');
     }
+
     if (
       intake.preferredTimeSlots &&
       clinician.availableTimeSlots &&
@@ -161,6 +170,7 @@ export class MatchingEngineService {
       score += 5;
       overlapping.push('time_slot');
     }
+
     return {
       id: clinician.id,
       fullName: clinician.fullName,

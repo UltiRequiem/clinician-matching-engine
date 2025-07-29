@@ -29,6 +29,7 @@ export default function ResultsPage() {
 			// Redirect back to home if no results
 			router.push("/");
 		}
+
 		setLoading(false);
 	}, [router]);
 
@@ -79,7 +80,7 @@ export default function ResultsPage() {
 							<CardTitle className="flex items-center justify-between">
 								<span>{clinician.fullName}</span>
 								<span className="text-sm font-normal text-gray-500">
-									Score: {Math.round(clinician.score * 100)}%
+									Score: {Math.round(clinician.score )}%
 								</span>
 							</CardTitle>
 							<CardDescription>
