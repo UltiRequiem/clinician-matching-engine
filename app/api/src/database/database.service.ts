@@ -49,8 +49,10 @@ export class DatabaseService {
     };
   }
   async getCliniciansWithRelations(filter: Prisma.ClinicianWhereInput = {}) {
+    // Optimized query: Get only top 5 clinicians with relations
+    // This avoids loading all 62,000 clinicians into memory
     return await this.prisma.clinician.findMany({
-      take: 10,
+      take: 5,
       where: filter,
       include: {
         insurancesAccepted: true,
@@ -60,7 +62,28 @@ export class DatabaseService {
         appointmentTypes: true,
         availableTimeSlots: true,
       },
+      // Order by availability first, then by match count (lower is better)
+      orderBy: [{ isAvailableNow: 'desc' }, { matchCount: 'asc' }],
     });
+  }
+
+  async getTopClinicianWithRelations(filter: Prisma.ClinicianWhereInput = {}) {
+    const clinicians = await this.prisma.clinician.findMany({
+      take: 1,
+      where: filter,
+      include: {
+        insurancesAccepted: true,
+        clinicalSpecialties: true,
+        languagesSpoken: true,
+        statesLicensed: true,
+        appointmentTypes: true,
+        availableTimeSlots: true,
+      },
+      // Order by availability first, then by match count (lower is better)
+      orderBy: [{ isAvailableNow: 'desc' }, { matchCount: 'asc' }],
+    });
+
+    return clinicians[0] || null;
   }
 
   async createPatient(data: Prisma.PatientCreateInput) {

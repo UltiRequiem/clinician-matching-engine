@@ -21,22 +21,20 @@ export class MatchingEngineService {
   }
 
   public async topMatch(intake: MatchIntakeDto) {
-    const clinicians = await this.databaseService.getCliniciansWithRelations(
-      this.databaseService.buildClinicianFilter(intake),
-    );
+    const topClinician =
+      await this.databaseService.getTopClinicianWithRelations(
+        this.databaseService.buildClinicianFilter(intake),
+      );
 
-    const topScored = this.rankAndScoreClinicians(clinicians, intake);
-    const topMatch = topScored.shift();
-
-    if (!topMatch) {
+    if (!topClinician) {
       throw new Error('No clinician found');
     }
 
-    const explanation = this.generateTopMatchExplanation(
-      intake,
-      topMatch,
-      clinicians,
-    );
+    const topMatch = this.scoreClinician(topClinician, intake);
+
+    const explanation = this.generateTopMatchExplanation(intake, topMatch, [
+      topClinician,
+    ]);
 
     return explanation;
   }
