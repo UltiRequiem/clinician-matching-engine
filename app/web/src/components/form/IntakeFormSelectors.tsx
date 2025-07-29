@@ -84,11 +84,11 @@ export function IntakeFormSelectors({
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <SelectTrigger className="w-[190px]">
+                  <SelectTrigger className="w-full md:w-[190px]">
                     <SelectValue placeholder={item.placeholder} />
                   </SelectTrigger>
                   <SelectContent>
-                    {item.data.map((data_item, ) => {
+                    {item.data.map((data_item) => {
                       if (typeof data_item === "string") {
                         return (
                           <SelectItem value={data_item} key={data_item}>
@@ -98,7 +98,6 @@ export function IntakeFormSelectors({
                       }
 
                       return (
-
                         <SelectItem value={data_item.id} key={data_item.id}>
                           {data_item.label}
                         </SelectItem>
