@@ -9,8 +9,11 @@ import { Form, FormDescription, FormLabel } from "../ui/form";
 import { IntakeFormCheckboxes } from "./IntakeFormCheckboxes";
 import { CLINICAL_NEEDS, TIME_SLOTS } from "@/lib/constants";
 import { IntakeFormSelectors } from "./IntakeFormSelectors";
+import { matchClinicians, MatchIntakeDto, UrgencyLevel } from "@lunajoy/engine";
+import { useRouter } from "next/navigation";
 
 export default function IntakeForm() {
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -25,8 +28,41 @@ export default function IntakeForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("Form submitted with data:", data);
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      // Convert form data to MatchIntakeDto format
+      const matchIntake: MatchIntakeDto = {
+        state: data.state,
+        language: data.language,
+        genderPreference:
+          data.gender_preference === "No preference"
+            ? undefined
+            : data.gender_preference,
+        insuranceProvider: data.insurance_provider,
+        appointmentType: data.appointment_type.toLowerCase(),
+        clinicalNeeds: data.clinical_needs,
+        preferredTimeSlots: data.preferred_time_slots,
+        urgencyLevel: (data.urgency_level === "Inmediate (within 3 days)"
+          ? "immediate"
+          : "flexible") as UrgencyLevel,
+      };
+
+      console.log(matchIntake);
+      console.log(JSON.stringify(matchIntake));
+
+      // Call the matching engine
+      const results = await matchClinicians(matchIntake);
+
+      // Store results in sessionStorage for the results page
+      sessionStorage.setItem("matchResults", JSON.stringify(results));
+      sessionStorage.setItem("matchIntake", JSON.stringify(matchIntake));
+
+      // Navigate to results page
+      router.push("/results");
+    } catch (error) {
+      console.error("Error matching clinicians:", error);
+      alert("Failed to match clinicians. Please try again.");
+    }
   }
 
   return (
