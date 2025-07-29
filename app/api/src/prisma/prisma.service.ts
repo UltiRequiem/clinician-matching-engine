@@ -15,8 +15,8 @@ class CustomPrismaClient extends PrismaClient {
 
     if (configService.useTurso) {
       const adapter = new PrismaLibSQL({
-        url: configService.getRequired('tursoUrl'),
-        authToken: configService.getRequired('tursoAuthToken'),
+        url: configService.tursoUrl!,
+        authToken: configService.tursoAuthToken!,
       });
 
       config.adapter = adapter;
