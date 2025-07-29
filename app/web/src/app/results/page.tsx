@@ -10,12 +10,12 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import type { ClinicianMatchScore, MatchIntakeDto } from "@lunajoy/engine";
+import { overlapLabels, type ClinicianMatchScore, type MatchIntakeDto } from "@lunajoy/engine";
 
 export default function ResultsPage() {
 	const router = useRouter();
 	const [results, setResults] = useState<ClinicianMatchScore[]>([]);
-	const [intake, setIntake] = useState<MatchIntakeDto | null>(null);
+	const [_intake, setIntake] = useState<MatchIntakeDto | null>(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -26,7 +26,6 @@ export default function ResultsPage() {
 			setResults(JSON.parse(storedResults));
 			setIntake(JSON.parse(storedIntake));
 		} else {
-			// Redirect back to home if no results
 			router.push("/");
 		}
 		setLoading(false);
@@ -120,7 +119,7 @@ export default function ResultsPage() {
 										<div className="mb-2">
 											<span className="font-semibold">Matching Criteria:</span>
 											<div className="flex flex-wrap gap-1 mt-1">
-												{clinician.overlapping.map((criteria) => (
+												{overlapLabels(clinician.overlapping).map((criteria) => (
 													<span
 														key={criteria}
 														className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
